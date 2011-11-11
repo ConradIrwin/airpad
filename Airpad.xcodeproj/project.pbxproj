@@ -1,0 +1,452 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
+		CEC636DD146CF7FE0036FA02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DC146CF7FE0036FA02 /* Foundation.framework */; };
+		CEC636DF146CF7FE0036FA02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */; };
+		CEC636E1146CF7FE0036FA02 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636E0146CF7FE0036FA02 /* CoreData.framework */; };
+		CEC636E7146CF7FE0036FA02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */; };
+		CEC636E9146CF7FE0036FA02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC636E8146CF7FE0036FA02 /* main.m */; };
+		CEC636ED146CF7FE0036FA02 /* AirpadAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */; };
+		CEC636F0146CF7FE0036FA02 /* Airpad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */; };
+		CEC636F8146CF7FE0036FA02 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636F7146CF7FE0036FA02 /* SenTestingKit.framework */; };
+		CEC636F9146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
+		CEC636FA146CF7FE0036FA02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DC146CF7FE0036FA02 /* Foundation.framework */; };
+		CEC636FB146CF7FE0036FA02 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636E0146CF7FE0036FA02 /* CoreData.framework */; };
+		CEC63703146CF7FE0036FA02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC63701146CF7FE0036FA02 /* InfoPlist.strings */; };
+		CEC63706146CF7FE0036FA02 /* AirpadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC63705146CF7FE0036FA02 /* AirpadTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEC636FC146CF7FE0036FA02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC636CD146CF7FE0036FA02 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEC636D5146CF7FE0036FA02;
+			remoteInfo = Airpad;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CEC636D6146CF7FE0036FA02 /* Airpad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airpad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEC636DA146CF7FE0036FA02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CEC636DC146CF7FE0036FA02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CEC636E0146CF7FE0036FA02 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		CEC636E4146CF7FE0036FA02 /* Airpad-Info.plist */ = {isa = PBXFileReference; path = "Airpad-Info.plist"; sourceTree = "<group>"; };
+		CEC636E6146CF7FE0036FA02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEC636E8146CF7FE0036FA02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CEC636EA146CF7FE0036FA02 /* Airpad-Prefix.pch */ = {isa = PBXFileReference; path = "Airpad-Prefix.pch"; sourceTree = "<group>"; };
+		CEC636EB146CF7FE0036FA02 /* AirpadAppDelegate.h */ = {isa = PBXFileReference; path = AirpadAppDelegate.h; sourceTree = "<group>"; };
+		CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirpadAppDelegate.m; sourceTree = "<group>"; };
+		CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Airpad.xcdatamodel; sourceTree = "<group>"; };
+		CEC636F6146CF7FE0036FA02 /* AirpadTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirpadTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEC636F7146CF7FE0036FA02 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		CEC63700146CF7FE0036FA02 /* AirpadTests-Info.plist */ = {isa = PBXFileReference; path = "AirpadTests-Info.plist"; sourceTree = "<group>"; };
+		CEC63702146CF7FE0036FA02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEC63704146CF7FE0036FA02 /* AirpadTests.h */ = {isa = PBXFileReference; path = AirpadTests.h; sourceTree = "<group>"; };
+		CEC63705146CF7FE0036FA02 /* AirpadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirpadTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEC636D3146CF7FE0036FA02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */,
+				CEC636DD146CF7FE0036FA02 /* Foundation.framework in Frameworks */,
+				CEC636DF146CF7FE0036FA02 /* CoreGraphics.framework in Frameworks */,
+				CEC636E1146CF7FE0036FA02 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEC636F2146CF7FE0036FA02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC636F8146CF7FE0036FA02 /* SenTestingKit.framework in Frameworks */,
+				CEC636F9146CF7FE0036FA02 /* UIKit.framework in Frameworks */,
+				CEC636FA146CF7FE0036FA02 /* Foundation.framework in Frameworks */,
+				CEC636FB146CF7FE0036FA02 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CEC636CB146CF7FE0036FA02 = {
+			isa = PBXGroup;
+			children = (
+				CEC636E2146CF7FE0036FA02 /* Airpad */,
+				CEC636FE146CF7FE0036FA02 /* AirpadTests */,
+				CEC636D9146CF7FE0036FA02 /* Frameworks */,
+				CEC636D7146CF7FE0036FA02 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CEC636D7146CF7FE0036FA02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEC636D6146CF7FE0036FA02 /* Airpad.app */,
+				CEC636F6146CF7FE0036FA02 /* AirpadTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEC636D9146CF7FE0036FA02 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEC636DA146CF7FE0036FA02 /* UIKit.framework */,
+				CEC636DC146CF7FE0036FA02 /* Foundation.framework */,
+				CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */,
+				CEC636E0146CF7FE0036FA02 /* CoreData.framework */,
+				CEC636F7146CF7FE0036FA02 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEC636E2146CF7FE0036FA02 /* Airpad */ = {
+			isa = PBXGroup;
+			children = (
+				CEC636EB146CF7FE0036FA02 /* AirpadAppDelegate.h */,
+				CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */,
+				CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */,
+				CEC636E3146CF7FE0036FA02 /* Supporting Files */,
+			);
+			path = Airpad;
+			sourceTree = "<group>";
+		};
+		CEC636E3146CF7FE0036FA02 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CEC636E4146CF7FE0036FA02 /* Airpad-Info.plist */,
+				CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */,
+				CEC636E8146CF7FE0036FA02 /* main.m */,
+				CEC636EA146CF7FE0036FA02 /* Airpad-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CEC636FE146CF7FE0036FA02 /* AirpadTests */ = {
+			isa = PBXGroup;
+			children = (
+				CEC63704146CF7FE0036FA02 /* AirpadTests.h */,
+				CEC63705146CF7FE0036FA02 /* AirpadTests.m */,
+				CEC636FF146CF7FE0036FA02 /* Supporting Files */,
+			);
+			path = AirpadTests;
+			sourceTree = "<group>";
+		};
+		CEC636FF146CF7FE0036FA02 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CEC63700146CF7FE0036FA02 /* AirpadTests-Info.plist */,
+				CEC63701146CF7FE0036FA02 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEC636D5146CF7FE0036FA02 /* Airpad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEC63709146CF7FE0036FA02 /* Build configuration list for PBXNativeTarget "Airpad" */;
+			buildPhases = (
+				CEC636D2146CF7FE0036FA02 /* Sources */,
+				CEC636D3146CF7FE0036FA02 /* Frameworks */,
+				CEC636D4146CF7FE0036FA02 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Airpad;
+			productName = Airpad;
+			productReference = CEC636D6146CF7FE0036FA02 /* Airpad.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEC636F5146CF7FE0036FA02 /* AirpadTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEC6370C146CF7FE0036FA02 /* Build configuration list for PBXNativeTarget "AirpadTests" */;
+			buildPhases = (
+				CEC636F1146CF7FE0036FA02 /* Sources */,
+				CEC636F2146CF7FE0036FA02 /* Frameworks */,
+				CEC636F3146CF7FE0036FA02 /* Resources */,
+				CEC636F4146CF7FE0036FA02 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEC636FD146CF7FE0036FA02 /* PBXTargetDependency */,
+			);
+			name = AirpadTests;
+			productName = AirpadTests;
+			productReference = CEC636F6146CF7FE0036FA02 /* AirpadTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEC636CD146CF7FE0036FA02 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Rapportive;
+			};
+			buildConfigurationList = CEC636D0146CF7FE0036FA02 /* Build configuration list for PBXProject "Airpad" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CEC636CB146CF7FE0036FA02;
+			productRefGroup = CEC636D7146CF7FE0036FA02 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEC636D5146CF7FE0036FA02 /* Airpad */,
+				CEC636F5146CF7FE0036FA02 /* AirpadTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEC636D4146CF7FE0036FA02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC636E7146CF7FE0036FA02 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEC636F3146CF7FE0036FA02 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC63703146CF7FE0036FA02 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CEC636F4146CF7FE0036FA02 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEC636D2146CF7FE0036FA02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC636E9146CF7FE0036FA02 /* main.m in Sources */,
+				CEC636ED146CF7FE0036FA02 /* AirpadAppDelegate.m in Sources */,
+				CEC636F0146CF7FE0036FA02 /* Airpad.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEC636F1146CF7FE0036FA02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEC63706146CF7FE0036FA02 /* AirpadTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEC636FD146CF7FE0036FA02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEC636D5146CF7FE0036FA02 /* Airpad */;
+			targetProxy = CEC636FC146CF7FE0036FA02 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEC636E6146CF7FE0036FA02 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CEC63701146CF7FE0036FA02 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEC63702146CF7FE0036FA02 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CEC63707146CF7FE0036FA02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		CEC63708146CF7FE0036FA02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CEC6370A146CF7FE0036FA02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Airpad/Airpad-Prefix.pch";
+				INFOPLIST_FILE = "Airpad/Airpad-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CEC6370B146CF7FE0036FA02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Airpad/Airpad-Prefix.pch";
+				INFOPLIST_FILE = "Airpad/Airpad-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CEC6370D146CF7FE0036FA02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Airpad.app/Airpad";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Airpad/Airpad-Prefix.pch";
+				INFOPLIST_FILE = "AirpadTests/AirpadTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		CEC6370E146CF7FE0036FA02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Airpad.app/Airpad";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Airpad/Airpad-Prefix.pch";
+				INFOPLIST_FILE = "AirpadTests/AirpadTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEC636D0146CF7FE0036FA02 /* Build configuration list for PBXProject "Airpad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEC63707146CF7FE0036FA02 /* Debug */,
+				CEC63708146CF7FE0036FA02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEC63709146CF7FE0036FA02 /* Build configuration list for PBXNativeTarget "Airpad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEC6370A146CF7FE0036FA02 /* Debug */,
+				CEC6370B146CF7FE0036FA02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CEC6370C146CF7FE0036FA02 /* Build configuration list for PBXNativeTarget "AirpadTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEC6370D146CF7FE0036FA02 /* Debug */,
+				CEC6370E146CF7FE0036FA02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */,
+			);
+			currentVersion = CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */;
+			path = Airpad.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = CEC636CD146CF7FE0036FA02 /* Project object */;
+}
