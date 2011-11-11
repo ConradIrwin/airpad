@@ -2,26 +2,83 @@
 //  AirpadAppDelegate.m
 //  Airpad
 //
-//  Created by Conrad Irwin on 10/11/2011.
+//  Created by Conrad Irwin on 06/11/2011.
 //  Copyright (c) 2011 Rapportive. All rights reserved.
 //
 
 #import "AirpadAppDelegate.h"
 
+#import "AirpadViewController.h"
+#import "AirbrakeDetailViewController.h"
+#import "AirbrakeListViewController.h"
+#import "IASKAppSettingsViewController.h"
+#import "UserSettings.h"
+
 @implementation AirpadAppDelegate
 
-@synthesize window = _window;
++ (AirpadAppDelegate *)sharedDelegate {
+    return (AirpadAppDelegate *)[UIApplication sharedApplication].delegate;
+}
+
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+@synthesize window = _window;
+@synthesize viewController = _viewController;
 
+- (void)showSettingsDialogIfNecessary {
+    NSLog(@"%@", [[[UserSettings userSettings] currentUser] projects]);
+    if ([[UserSettings userSettings] isSetupRequired]) {
+        IASKAppSettingsViewController *setupConfig = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
+        
+        setupConfig.showDoneButton = YES;
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:setupConfig];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        setupConfig.delegate = self;
+        [self.viewController presentModalViewController:navController animated:YES];
+    }
+}
+
+- (void) showDialogForError: (NSError *) error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry, something broke!"
+                                                    message:[error localizedDescription]
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil
+                          ];
+    NSLog(@"Showed dialog for: %@", error);
+    [alert show];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    AirbrakeListViewController *listController = [[AirbrakeListViewController alloc] initWithNibName:@"AirbrakeListView" bundle:nil];
+    AirbrakeDetailViewController *detailController = [[AirbrakeDetailViewController alloc] initWithNibName:@"AirbrakeDetailView" bundle:nil];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.viewController = [[UISplitViewController alloc] init];
+    self.viewController.viewControllers = [NSArray arrayWithObjects:
+                                           listController,
+                                           detailController,
+                                           nil];
+    
+    self.viewController.delegate = detailController;
+    listController.delegate = detailController;
+    listController.fetcher = [[AirbrakeFetcher alloc] init];
+    detailController.projectFetcher = [[ProjectFetcher alloc] init];
+    detailController.listView = listController;
+    
+    self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    [self showSettingsDialogIfNecessary];
+
     return YES;
+}
+- (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
+    [self.viewController dismissModalViewControllerAnimated:YES];
+	// your code here to reconfigure the app for changed settings
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -38,6 +95,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    [self saveContext];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -56,9 +114,16 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Saves changes in the application's managed object context before the application terminates.
+    /*
+     Called when the application is about to terminate.
+     Save data if appropriate.
+     See also applicationDidEnterBackground:.
+     */
     [self saveContext];
 }
+
+
+#pragma mark - Core Data stack
 
 - (void)saveContext
 {
@@ -78,8 +143,6 @@
         } 
     }
 }
-
-#pragma mark - Core Data stack
 
 /**
  Returns the managed object context for the application.
@@ -111,7 +174,7 @@
     {
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Airpad" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"AirbrakeModel" withExtension:@"momd"];
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }
@@ -127,7 +190,7 @@
         return __persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Airpad.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"AirbrakeModel.sqlite"];
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

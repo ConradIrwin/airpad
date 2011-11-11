@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Login information</string>
+            <key>FooterText</key>
+            <string>This is the host name of your Airbrake project, e.g. "example.airbrake.io".</string>
+		</dict>
+        <dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>Key</key>
+			<string>baseUrl</string>
+			<key>KeyboardType</key>
+			<string>URL</string>
+			<key>Title</key>
+			<string>Airbrake URL</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+            <key>PlaceHolder</key>
+            <string>PlaceHolder</string>
+		</dict>
+        <dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+            <key>FooterText</key>
+            <string>You can find your Auth Token in the settings dialog when you log into the Airbrake website.</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Auth Token</string>
+			<key>Key</key>
+			<string>authToken</string>
+		</dict>
+
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
