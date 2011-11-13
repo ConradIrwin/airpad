@@ -21,12 +21,16 @@
 @end
 
 @implementation NSSet (FunctionAlUtils)
-- (NSArray *) detectWithBlock:(bool(^)(id))block {   
+- (id) detectWithBlock:(bool(^)(id))block {   
     for (id element in self) {
         if (block(element)) {
             return element;
         }
     }
     return nil;
+}
+
+- (bool) anyWithBlock:(bool(^)(id))block {
+    return !![self detectWithBlock:block];
 }
 @end

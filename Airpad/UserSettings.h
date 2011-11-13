@@ -16,5 +16,6 @@
 -(NSURL *)urlForAirbrakeWithId:(NSInteger) airbrakeId;
 
 -(bool)isSetupRequired;
++(AirbrakeUser *)currentUser;
 -(AirbrakeUser *)currentUser;
 @end

@@ -13,18 +13,18 @@
 #import "AirpadAppDelegate.h"
 
 @implementation ProjectFetcher {
-    NSMutableArray *projects;
     PagedXmlFetcher *fetcher;
     AirbrakeUser *user;
 }
-@synthesize projects;
 
--(ProjectFetcher *)initWithUser:(AirbrakeUser *)_user {
+-(id)initWithUser:(AirbrakeUser *)_user {
     self = [self init];
-    user = _user;
-    self->fetcher = [[PagedXmlFetcher alloc] init];
-    self->fetcher.delegate = self;
-    [self->fetcher fetchNextPage];
+    if (self) {
+        self->user = _user;
+        self->fetcher = [[PagedXmlFetcher alloc] init];
+        self->fetcher.delegate = self;
+        [self->fetcher fetchNextPage];
+    }
     return self;
 }
 

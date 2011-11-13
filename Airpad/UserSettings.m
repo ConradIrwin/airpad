@@ -15,6 +15,10 @@
     AirbrakeUser *_user;
 }
 
++ (AirbrakeUser *) currentUser {
+    return [[self userSettings] currentUser];
+}
+
 + (UserSettings *)userSettings {
     static UserSettings *userSettings;
     if (!userSettings) {

@@ -15,17 +15,16 @@
 @synthesize delegate;
 @synthesize pageNumber;
 
-- (PagedXmlFetcher *) init {
+- (id) init {
     self = [super init];
-    self->pageNumber = 0;
+    if (self) {
+        self->pageNumber = 0;
+    }
     return self;
 }
 
-
 - (void) fetchNextPage {
     pageNumber += 1;
-
-    NSAssert(!connection, @"You can't request multiple pages simultaneously!");
     
     NSURL * nextPageUrl = [delegate pagedXmlFetcher:self urlForPage:pageNumber];
     NSLog(@"Fetching %@", nextPageUrl);
@@ -36,12 +35,18 @@
                                         cachePolicy:NSURLRequestUseProtocolCachePolicy
                                         timeoutInterval:60.0];
         [request setHTTPMethod: @"GET"];
-
-        self->connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-        self->responseData = [[NSMutableData alloc] init];
-
+        [self fetchPageWithRequest: request];
     }
 }
+
+- (void) fetchPageWithRequest:(NSMutableURLRequest*)request
+{
+    NSAssert(!connection, @"You can't request multiple pages simultaneously!");
+    self->connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    self->responseData = [[NSMutableData alloc] init];
+}
+
+#pragma mark – NSURLConnection delegation
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     [responseData setLength:0];
@@ -49,6 +54,10 @@
 
 - (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    [delegate pagedXmlFetcher:self didFailWithError: error];
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -67,11 +76,6 @@
     } else {
         [delegate pagedXmlFetcher:self didFetchXML:d];
     }
-#
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [delegate pagedXmlFetcher:self didFailWithError: error];
 }
                                
 @end

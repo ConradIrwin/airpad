@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11C74" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AirbrakeError" representedClassName="AirbrakeError" syncable="YES">
+        <attribute name="airbrakeId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="backtrace" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="earliestSeenAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="errorMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isResolved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="latestSeenAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="noticesCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="project" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AirbrakeProject" inverseName="errors" inverseEntity="AirbrakeProject" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AirbrakeUser" inverseName="errors" inverseEntity="AirbrakeUser" syncable="YES"/>
+    </entity>
+    <entity name="AirbrakeProject" representedClassName="AirbrakeProject" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="errors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirbrakeError" inverseName="project" inverseEntity="AirbrakeError" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AirbrakeUser" inverseName="projects" inverseEntity="AirbrakeUser" syncable="YES"/>
+    </entity>
+    <entity name="AirbrakeUser" representedClassName="AirbrakeUser" syncable="YES">
+        <attribute name="authToken" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="baseUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="errors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirbrakeError" inverseName="user" inverseEntity="AirbrakeError" syncable="YES"/>
+        <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AirbrakeProject" inverseName="user" inverseEntity="AirbrakeProject" syncable="YES"/>
+    </entity>
+    <fetchRequest name="FetchRequest" entity="AirbrakeError"/>
+    <elements>
+        <element name="AirbrakeError" positionX="-117" positionY="-1260" width="128" height="180"/>
+        <element name="AirbrakeProject" positionX="133" positionY="-1329" width="128" height="105"/>
+        <element name="AirbrakeUser" positionX="311" positionY="-1185" width="128" height="105"/>
+    </elements>
+</model>

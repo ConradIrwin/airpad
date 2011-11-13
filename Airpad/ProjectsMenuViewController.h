@@ -9,14 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ProjectFetcher.h"
 #import "AirbrakeProject.h"
-
-@protocol ProjectSelectorDelegate
-- (void) didSelectProject:(AirbrakeProject *)project;
-@end
+#import "AirbrakeUser.h"
 
 @interface ProjectsMenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-@property (assign, nonatomic) IBOutlet UITableView *theTable;
-@property (nonatomic, assign) ProjectFetcher *fetcher;
-@property (nonatomic, assign) id<ProjectSelectorDelegate> delegate;
-@property (nonatomic, assign) AirbrakeProject* projectFilter;
+@property (nonatomic, weak) IBOutlet UITableView *theTable;
+@property (nonatomic, weak) UIPopoverController* popoverController;
+@property (nonatomic, strong) AirbrakeUser *user;
 @end

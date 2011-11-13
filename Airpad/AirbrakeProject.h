@@ -26,4 +26,6 @@
 - (void)addErrors:(NSSet *)values;
 - (void)removeErrors:(NSSet *)values;
 
+- (NSString *) nameWithFallback;
+
 @end

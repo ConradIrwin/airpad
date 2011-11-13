@@ -21,4 +21,5 @@
 @property (nonatomic,assign) id<PagedXmlFetcherDelegate> delegate;
 @property (nonatomic,assign) NSInteger pageNumber;
 - (void) fetchNextPage;
+- (void) fetchPageWithRequest:(NSURLRequest *)request;
 @end

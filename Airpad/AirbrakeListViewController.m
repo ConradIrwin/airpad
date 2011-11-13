@@ -9,36 +9,52 @@
 #import "AirbrakeListViewController.h"
 #import "AirbrakeFetcher.h"
 #import "AirbrakeError.h"
+#import "UserSettings.h"
+#import "NSString+Shortcuts.h"
+#import "AirbrakeErrorCell.h"
 
-@implementation AirbrakeListViewController {
-    AirbrakeFetcher *fetcher;
-    NSString* filter;
-}
+@implementation AirbrakeListViewController
+
 @synthesize searchBox;
 @synthesize airbrakeTable;
-@synthesize delegate;
-@synthesize fetcher;
-@synthesize projectFilter;
+@synthesize user;
+@synthesize visibleAirbrakes;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        filter=@"";
-        [self addObserver:self forKeyPath:@"fetcher.airbrakes" options:0 context:@"fetcher"];
-        [self addObserver:self forKeyPath:@"projectFilter" options:0 context:@"fetcher"];
 
-
-    }
     return self;
 }
 
+- (void) cleanup
+{
+    if (self.user) {
+        [self.user removeObserver:self forKeyPath:@"errors"       ];
+        [self.user removeObserver:self forKeyPath:@"searchFilter" ];
+        [self.user removeObserver:self forKeyPath:@"projectFilter"];
+    }
+    self.visibleAirbrakes = nil;
+}
+
+- (void) dealloc
+{
+    [self cleanup];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    user = [UserSettings currentUser];
+    [user addObserver:self forKeyPath:@"errors"        options:0 context:@"refresh"];
+    [user addObserver:self forKeyPath:@"searchFilter"  options:0 context:@"refresh"];
+    [user addObserver:self forKeyPath:@"projectFilter" options:0 context:@"refresh"];
+    [self recalculateVisible];
+    [self.airbrakeTable reloadData];
+}
 - (void)viewDidUnload
 {
-    [self setAirbrakeTable:nil];
-    [self setSearchBox:nil];
-    fetcher = nil;
-    filter = nil;
+    [self cleanup];
     [super viewDidUnload];
 }
 
@@ -47,28 +63,41 @@
 	return YES;
 }
 
+- (void) recalculateVisible
+{
+    NSMutableArray *res = [NSMutableArray arrayWithObjects: nil];
+    for (AirbrakeError *ab in user.sortedAirbrakes) {
+        bool shouldAdd = true;
+        
+        if (shouldAdd && user.projectFilter) {
+            shouldAdd = user.projectFilter == ab.project;
+        }
+        
+        if (shouldAdd && user.searchFilter && ![user.searchFilter isEqualToString:@""]) {
+            shouldAdd = [ab.errorMessage containsRegex: user.searchFilter options: NSCaseInsensitiveSearch];
+        }
+        
+        if (shouldAdd) {
+            [res addObject: ab];
+        }
+    }
+    self.visibleAirbrakes = res;  
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == @"fetcher") {
+    if (context == @"refresh") {
+        [self recalculateVisible];
         [airbrakeTable reloadData];
+        if (user.currentAirbrake) {
+            NSInteger index = [visibleAirbrakes indexOfObject:user.currentAirbrake];
+            if (index != NSNotFound) {
+                [airbrakeTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+            NSLog(@"Selected index %i : %i", index, NSNotFound);
+        }
     } else {
         NSLog(@"Received unexpected event!");  
     }
-}
-
-- (NSArray*) visibleAirbrakes {
-    NSMutableArray *res = [NSMutableArray arrayWithObjects: nil];
-    for (AirbrakeError *ab in fetcher.airbrakes) {
-        if (([filter isEqualToString: @""] || [ab.title rangeOfString:filter
-                                                             options: NSRegularExpressionSearch | NSCaseInsensitiveSearch
-                                              ].location != NSNotFound)
-            && (
-                !projectFilter || !projectFilter.projectId || [projectFilter.projectId integerValue] == ab.projectId
-            )) {
-            [res addObject:ab];
-        }
-    }
-    return res;
 }
 
 #pragma mark - Table
@@ -78,13 +107,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.visibleAirbrakes count];
+    return [visibleAirbrakes count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = [[UITableViewCell alloc] init];
-    AirbrakeError* ab = [self.visibleAirbrakes objectAtIndex: [indexPath indexAtPosition: 1]];
-    [cell.textLabel setText: ab.title];
+    AirbrakeErrorCell* cell = [[AirbrakeErrorCell alloc] init];
+    cell.airbrake = [visibleAirbrakes objectAtIndex: [indexPath indexAtPosition: 1]];
     return cell;
 }
 
@@ -95,14 +123,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AirbrakeError *error = [self.visibleAirbrakes objectAtIndex: [indexPath indexAtPosition: 1]];
-    [self.delegate didActivateAirbrake:error];
+    user.currentAirbrake = [self.visibleAirbrakes objectAtIndex: [indexPath indexAtPosition: 1]];
 }
 
 #pragma mark - Search
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self->filter = searchText;
+    user.searchFilter = searchText;
     [airbrakeTable reloadData];
 }
 

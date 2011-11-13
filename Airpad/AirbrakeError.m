@@ -2,163 +2,130 @@
 //  AirbrakeError.m
 //  Airpad
 //
-//  Created by Conrad Irwin on 06/11/2011.
+//  Created by Conrad Irwin on 11/11/2011.
 //  Copyright (c) 2011 Rapportive. All rights reserved.
 //
 
 #import "AirbrakeError.h"
-#import "UserSettings.h"
+#import "AirbrakeProject.h"
+#import "NSDate+DateISOParser.h"
+#import "NSString+Shortcuts.h"
+#import "NSArray+FunctionalUtils.h"
 
-@implementation AirbrakeError {
-    NSURLConnection *connection;
-    NSMutableData *responseData;
-}
-@synthesize details;
-@synthesize basics;
 
--(AirbrakeError *)initWithBasics:(SMXMLElement *)newBasics {
-    self = [self init];
-    self->basics = newBasics;
-    return self;
-}
+@implementation AirbrakeError
 
--(NSURL *)airbrakeUrl {
-    return [[UserSettings userSettings] urlForAirbrakeWithId:[self airbrakeId]];
-}
+@dynamic airbrakeId;
+@dynamic backtrace;
+@dynamic earliestSeenAt;
+@dynamic isResolved;
+@dynamic latestSeenAt;
+@dynamic noticesCount;
+@dynamic project;
+@dynamic user;
+@dynamic errorMessage;
 
--(void)fetchDetails {
+@synthesize hasDetails, justLoaded;
+@synthesize fetcher;
+
+- (void)importBasicsFromElement: (SMXMLElement *)element {
     
-    if(details) {
-        return;
+    self.errorMessage   =                                [[element childNamed:@"error-message"] value];
+    
+    self.noticesCount   = [NSNumber numberWithInteger:  [[[element childNamed:@"notices-count"] value] integerValue]];
+    self.isResolved     = [NSNumber numberWithBool:     [[[element childNamed:@"resolved"] value] boolValue]];
+    
+    self.latestSeenAt   = [NSDate dateWithISO8601String: [[element childNamed:@"most-recent-notice-at"] value]];
+    self.earliestSeenAt = [NSDate dateWithISO8601String: [[element childNamed:@"created-at"] value]];
+}
+
+- (void)importDetailsFromElement: (SMXMLElement *)element {
+    [self willChangeValueForKey:@"details"];
+    [self importBasicsFromElement: element];
+    
+    NSArray *lines = [[[element childNamed:@"backtrace"] childrenNamed:@"line"] mapBlock:^(SMXMLElement *line) {
+        return [[[line value]
+                     stringByRegex:@".*/gems/" replacement:@""]
+                     stringByRegex:@".*\\[PROJECT_ROOT\\]/"replacement:@"app/"];
+    }];
+    
+    self.backtrace = [lines componentsJoinedByString:@"\n"];
+    self.hasDetails = true;
+    [self didChangeValueForKey:@"details"];
+}
+
++ (NSSet *)setOfAirbrakesFromXml:(SMXMLDocument *)xml forUser:(AirbrakeUser *)user{
+    NSArray *elements = [xml.root childrenNamed:@"group"];    
+    NSMutableSet *set = [[NSMutableSet alloc] initWithCapacity: [elements count]];
+    
+    for (SMXMLElement *element in elements) {
+        AirbrakeError *airbrake = [user airbrakeWithId: [[[element childNamed:@"id"] value] integerValue]];
+        
+        [airbrake importBasicsFromElement: element];
+        airbrake.hasDetails = false;
+        airbrake.project = [user projectWithId: [[[element childNamed:@"project-id"] value] integerValue]];
+        
+        [set addObject:airbrake];
     }
-
-    NSAssert(self.airbrakeId, @"Airbrake ID cannot be 0 in fetchDetails");
-    NSLog(@"Fetching %@", [self airbrakeUrl]);
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest
-                                    requestWithURL:[self airbrakeUrl] 
-                                    cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                    timeoutInterval:60.0];
-    [request setHTTPMethod: @"GET"];
-    
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    self->responseData = [[NSMutableData alloc] init];
+    return set;
 }
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [responseData setLength:0];
-}
-
-- (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [responseData appendData:data];
-}
-
-- (void) connectionDidFinishLoading:(NSURLConnection *)connection {    
-    NSError *e;
-    
-    SMXMLDocument *doc = [[SMXMLDocument alloc] initWithAirbrakeData:responseData error:&e];
-    if (e) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry, something broke!"
-                                   message:[e localizedDescription]
-                                  delegate:self
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles: nil
-         ];
-        [alert show];
+- (double)occurrenceRate {
+    NSTimeInterval ti = [self.latestSeenAt timeIntervalSinceDate:self.earliestSeenAt];
+    if (floor(ti) < 1) {
+        return 0.0;
+    } else {
+        return [self.noticesCount floatValue] * 86400.0 / ti;
     }
-    self.details = [doc root];
-    self->responseData = nil;
 }
 
-- (void) putBody:(const char*) body {
+- (NSDictionary *)details {
+    return [self dictionaryWithValuesForKeys: [NSArray arrayWithObjects: @"airbrakeId", @"errorMessage", @"backtrace", nil]];
+}
+
+- (void)loadDetails {
+    if (!self.fetcher) {
+        self.fetcher = [[PagedXmlFetcher alloc] init];
+        self.fetcher.delegate = self;
+        [self.fetcher fetchNextPage];
+    }
+}
+
+- (void) putBody:(NSString*) body {
     NSMutableURLRequest *request = [NSMutableURLRequest
-                                    requestWithURL:[self airbrakeUrl] 
+                                    requestWithURL:[self.user urlForAirbrakeWithId:[self.airbrakeId integerValue]]
                                     cachePolicy:NSURLRequestUseProtocolCachePolicy
                                     timeoutInterval:60.0];
     [request setHTTPMethod: @"PUT"];
     [request setValue: @"application/xml; charset: utf-8" forHTTPHeaderField: @"Content-Type"];
-    [request setHTTPBody: [NSData dataWithBytes: body length:strlen(body)]];
-    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    self->responseData = [[NSMutableData alloc] init];
+    [request setHTTPBody: [body dataUsingEncoding:NSUTF8StringEncoding]];
+
+    
+    self.fetcher = [[PagedXmlFetcher alloc] init];
+    self.fetcher.delegate = self;
+    [self.fetcher fetchPageWithRequest:request];
 }
+
 - (void) resolve {
-    [self putBody: "<group><resolved>true</resolved></group>\n\0"];
+    [self putBody: @"<group><resolved>true</resolved></group>\n"];
 }
 - (void) reopen{
-    [self putBody: "<group><resolved>false</resolved></group>\n\0"];
+    [self putBody: @"<group><resolved>false</resolved></group>\n"];
 }
 
+#pragma mark - pagedXmlFetcher delegate
 
--(NSString*)replaceGemsPathIn:(NSString*)string{
-    NSError *e = nil;
-    NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:@".*/gems/" options:0 error:&e];
-    NSAssert(!e, @"That gems regex is valid!");
-    NSRange range = NSMakeRange(0, [string length]);
-    
-    return [re stringByReplacingMatchesInString:string
-                                        options:0
-                                          range:range
-                                   withTemplate:@""];
-}
--(NSString*)replaceProjectRootIn:(NSString*)string{
-    NSError *e = nil;
-    NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:@".*\\[PROJECT_ROOT\\]/" options:0 error:&e];
-    NSAssert(!e, @"That project regex is valid!");
-    NSRange range = NSMakeRange(0, [string length]);
-    return [re stringByReplacingMatchesInString:string
-                                        options:0
-                                          range:range
-                                   withTemplate:@"app/"];
-}
-- (NSString*)backtrace{    
-    SMXMLElement *e = [self.details childNamed:@"backtrace"];
-    NSMutableString *s = [[NSMutableString alloc] init];
-    NSString *path = nil;
-    
-    for (SMXMLElement *line in [e childrenNamed:@"line"]) {
-        path = [line value];
-        path = [self replaceGemsPathIn: path];
-        path = [self replaceProjectRootIn: path];
-        [s appendString: path];
-        [s appendString: @"\n"];
-    }
-    return s;
+- (NSURL *)pagedXmlFetcher:(PagedXmlFetcher *)pagedXmlFetcher urlForPage:(NSInteger)pageNumber {
+    return [self.user urlForAirbrakeWithId: [self.airbrakeId integerValue]];
 }
 
-- (NSString*)title{
-    return [[self.basics childNamed:@"error-message"] value];
+- (void)pagedXmlFetcher:(PagedXmlFetcher *)pagedXmlFetcher didFetchXML:(SMXMLDocument *)document {
+    [self importDetailsFromElement: document.root];
+    // Don't call fetchNextPage because we don't actually `have` a next page at this point.
+    self.fetcher = nil;
 }
 
-- (NSInteger)airbrakeId{
-    return [[[self.basics childNamed:@"id"] value] integerValue];
-}
-
-- (bool)isResolved{
-    // Use details because it gets refreshed...
-    return details && [[[details childNamed:@"resolved"] value] boolValue];
-}
-
-- (NSInteger)occurrenceCount{
-    return [[[details childNamed:@"notices-count"] value] integerValue];
-}
-
-- (NSInteger)projectId{
-    return [[[basics childNamed:@"project-id"] value] integerValue];
-}
-
-- (NSDate *)earliestSeenAt{
-    return [NSDate dateWithISO8601String: [[details childNamed:@"created-at"] value]];
-}
-
-- (NSDate *)latestSeenAt{
-    return [NSDate dateWithISO8601String: [[details childNamed:@"most-recent-notice-at"] value]];
-}
-
-- (double)occurrenceRate{
-    NSTimeInterval ti = [[self latestSeenAt] timeIntervalSinceDate:[self earliestSeenAt]];
-    if (floor(ti) < 1) {
-        return 0;
-    }
-    return [self occurrenceCount] * 86400.0 / ti;
+- (void)pagedXmlFetcher:(PagedXmlFetcher *)pagedXmlFetcher didFailWithError:(NSError *)error {
+    [[AirpadAppDelegate sharedDelegate] showDialogForError:error];
 }
 @end

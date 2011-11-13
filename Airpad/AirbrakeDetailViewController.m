@@ -9,30 +9,40 @@
 #import "AirbrakeDetailViewController.h"
 #import "AirbrakeError.h"
 #import "ProjectsMenuViewController.h"
+#import "UserSettings.h"
+
 
 @implementation AirbrakeDetailViewController {
-    AirbrakeError *currentAirbrake;
     UIPopoverController *projectsMenu;
+    UIPopoverController *airbrakesMenu;
 }
 @synthesize toolbar;
 @synthesize resolveButton;
+@synthesize resolveSlider;
 @synthesize titleLabel;
 @synthesize occurrenceLabel;
 @synthesize backtraceText;
-@synthesize projectFetcher;
 @synthesize projectMenuButton;
 @synthesize listView;
+
+@synthesize user;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        currentAirbrake = nil;
-        // Custom initialization
+        self.user = [UserSettings currentUser];
+        [self.user addObserver:self forKeyPath:@"currentAirbrake.details" options:NSKeyValueObservingOptionInitial context:@"currentAirbrake"];
+        [self.user addObserver:self forKeyPath:@"projectFilter" options: NSKeyValueObservingOptionInitial context: @"projectFilter"];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    [self.user removeObserver: self forKeyPath: @"currentAirbrake.details"];
+    [self.user removeObserver: self forKeyPath: @"projectFilter"];
+}
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -66,6 +76,7 @@
     [self setOccurrenceLabel:nil];
     [self setBacktraceText:nil];
     [self setProjectMenuButton:nil];
+    [self setResolveSlider:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -79,7 +90,8 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     // We should hide popups when the view is rotated (Programming iOS pp.553, QA1294)
     if (projectsMenu) {
-        [projectsMenu dismissPopoverAnimated:YES];
+        // Animation looks terrible here.
+        [projectsMenu dismissPopoverAnimated:NO];
         projectsMenu = nil;
     }
 }
@@ -87,12 +99,16 @@
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc {
     [barButtonItem setTitle: @"Airbrakes"];
+    
+    // Allow people to click the resolve button with the menu open.
+    // (as a side effect, disallow clicks on other popover menus when the menu is opened).
     NSArray *arr = [[NSArray arrayWithObject:barButtonItem] arrayByAddingObjectsFromArray:toolbar.items];
+    airbrakesMenu = pc;
     [toolbar setItems: arr animated:YES];
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
-    
+    airbrakesMenu = nil;
     NSMutableArray *arr = [[NSMutableArray alloc] init];    
     for (UIBarButtonItem *item in toolbar.items) {
         if (item != barButtonItem) {
@@ -101,22 +117,6 @@
     }
     
     [toolbar setItems: arr animated:YES];
-}
-
-
-- (void)didActivateAirbrake:(AirbrakeError *)airbrake {
-    if (!airbrake.details) {
-        [airbrake fetchDetails];
-    }
-    if (self->currentAirbrake) {
-        [self->currentAirbrake removeObserver:self forKeyPath:@"details"];
-    }
-    self->currentAirbrake = airbrake;
-    [airbrake addObserver:self
-               forKeyPath:@"details"
-                  options:NSKeyValueObservingOptionInitial
-                  context:@"airbrake"];
-    
 }
 
 - (NSString*)prettyDate:(NSDate*)date {
@@ -132,88 +132,93 @@
     return[fmt stringFromDate:date];
 }
 - (NSString*)occurrenceDescription{
-    if (currentAirbrake.occurrenceCount == 1) {
-        return [NSString stringWithFormat: @"Occured once on %@", [self prettyDate:currentAirbrake.earliestSeenAt]];
-    } else if (currentAirbrake.occurrenceCount == 2) {
+    if ([user.currentAirbrake.noticesCount integerValue] == 1) {
+        return [NSString stringWithFormat: @"Occured once on %@", [self prettyDate:user.currentAirbrake.earliestSeenAt]];
+    } else if ([user.currentAirbrake.noticesCount integerValue] == 2) {
         return [NSString stringWithFormat: @"Occured twice on %@ and %@",
-                [self shortDate:currentAirbrake.earliestSeenAt],
-                [self prettyDate:currentAirbrake.latestSeenAt]];
+                [self shortDate:user.currentAirbrake.earliestSeenAt],
+                [self prettyDate:user.currentAirbrake.latestSeenAt]];
         
     } else {
-        return [NSString stringWithFormat: @"Occured %i times between %@ and %@ (%0.2f/day)",
-                currentAirbrake.occurrenceCount,
-                [self shortDate:currentAirbrake.earliestSeenAt],
-                [self prettyDate:currentAirbrake.latestSeenAt],
-                currentAirbrake.occurrenceRate];
+        return [NSString stringWithFormat: @"Occured %@ times between %@ and %@ (%0.2f/day)",
+                user.currentAirbrake.noticesCount,
+                [self shortDate:user.currentAirbrake.earliestSeenAt],
+                [self prettyDate:user.currentAirbrake.latestSeenAt],
+                user.currentAirbrake.occurrenceRate];
     }
     
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == @"airbrake" && object == currentAirbrake) {
-        [titleLabel setText: currentAirbrake.title];
-        if (currentAirbrake.details) {
-            [backtraceText setText: [currentAirbrake backtrace]];
+    if (context == @"currentAirbrake") {
+        
+        if (user.currentAirbrake.hasDetails) {
+            [backtraceText setText: user.currentAirbrake.backtrace];
             [resolveButton setEnabled: true];
-            if ([currentAirbrake isResolved]) {
+            if ([user.currentAirbrake.isResolved boolValue]) {
                 [resolveButton setTitle: @"Resolved" forState: UIControlStateNormal];
             } else {
                 [resolveButton setTitle: @"Resolve" forState: UIControlStateNormal];
             }
-            [occurrenceLabel setText: [self occurrenceDescription]];
         } else {
+            [user.currentAirbrake loadDetails];
             [resolveButton setEnabled:false];
             [resolveButton setTitle: @"Loading…" forState: UIControlStateDisabled];
-            [occurrenceLabel setText: @""];
             [backtraceText setText: @""];
         }
         
+        [titleLabel setText: user.currentAirbrake.errorMessage];
+        [occurrenceLabel setText: [self occurrenceDescription]];        
         
-    } else {
-        NSLog(@"Got unexpected observer event %@ %@ %@", object, change, context);
+    } else if (context == @"projectFilter") {
+        if (!user.projectFilter) {
+            [projectMenuButton setTitle: @"All Projects"];
+        } else {
+            [projectMenuButton setTitle: [user.projectFilter nameWithFallback]];
+        }
+        if (projectsMenu) {
+            [projectsMenu dismissPopoverAnimated:YES];
+            projectsMenu = nil;
+        }
     }
 }
 
 - (IBAction)resolveClicked:(id)sender {
-    if (currentAirbrake) {
-        if ([currentAirbrake isResolved]) {
-            [currentAirbrake reopen];
+    if (user.currentAirbrake) {
+        if ([user.currentAirbrake.isResolved boolValue]) {
+            [user.currentAirbrake reopen];
             [resolveButton setTitle: @"Undoing…" forState: UIControlStateDisabled];
         } else {
-            [currentAirbrake resolve];
-            [resolveButton setTitle:@"Resolving…" forState: UIControlStateDisabled];
+            [user.currentAirbrake resolve];
+            [resolveButton setTitle: @"Resolving…" forState: UIControlStateDisabled];
         }
         [resolveButton setEnabled:false];
     }
 }
 
 - (IBAction)projectsClicked:(id)sender {
-    if (!projectsMenu) {
-        ProjectsMenuViewController *menu = [[ProjectsMenuViewController alloc] initWithNibName: @"ProjectsMenuView" bundle:nil];
-        projectsMenu = [[UIPopoverController alloc] initWithContentViewController: menu];
-        projectsMenu.delegate = self;
-        menu.fetcher = projectFetcher;
-        menu.delegate = self;
-        [projectsMenu presentPopoverFromBarButtonItem:sender
-                             permittedArrowDirections:UIPopoverArrowDirectionUp
-                                             animated:YES];
-        
-        // Further clicks on the menu should hide the popup (Programming iOS pp. 554)
-        [projectsMenu setPassthroughViews: nil];
+    if (airbrakesMenu) {
+        [airbrakesMenu dismissPopoverAnimated:NO];
     }
+    ProjectsMenuViewController *menu = [[ProjectsMenuViewController alloc] initWithNibName: @"ProjectsMenuView" bundle:nil];
+    projectsMenu = [[UIPopoverController alloc] initWithContentViewController: menu];
+    projectsMenu.delegate = self;
+    menu.popoverController = projectsMenu;
+    [projectsMenu presentPopoverFromBarButtonItem:sender
+                         permittedArrowDirections:UIPopoverArrowDirectionUp
+                                         animated:YES];
+    
+    // Further clicks on the menu should hide the popup (Programming iOS pp. 554)
+    [projectsMenu setPassthroughViews: nil];
 }
 
 - (IBAction)openClicked:(id)sender {
-    if (currentAirbrake) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat: @"http://rapportive.airbrake.io/errors/%i",currentAirbrake.airbrakeId]]];
+    if (user.currentAirbrake) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat: @"http://rapportive.airbrake.io/errors/%i", user.currentAirbrake.airbrakeId]]];
     }
 }
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     if (projectsMenu == popoverController) {
         projectsMenu = nil;
     }
-}
-- (void)didSelectProject:(AirbrakeProject *)project {
-    listView.projectFilter = project;
-    [projectMenuButton setTitle: [project name]];
 }
 @end

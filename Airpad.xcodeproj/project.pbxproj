@@ -9,17 +9,11 @@
 /* Begin PBXBuildFile section */
 		CE00EA58146CF876004AB0EC /* AirbrakeDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */; };
 		CE00EA59146CF876004AB0EC /* AirbrakeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00E9F8146CF876004AB0EC /* AirbrakeDetailViewController.m */; };
-		CE00EA5A146CF876004AB0EC /* AirbrakeError.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00E9FA146CF876004AB0EC /* AirbrakeError.m */; };
 		CE00EA5B146CF876004AB0EC /* AirbrakeFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00E9FC146CF876004AB0EC /* AirbrakeFetcher.m */; };
 		CE00EA5C146CF876004AB0EC /* AirbrakeListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE00E9FD146CF876004AB0EC /* AirbrakeListView.xib */; };
 		CE00EA5D146CF876004AB0EC /* AirbrakeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00E9FF146CF876004AB0EC /* AirbrakeListViewController.m */; };
-		CE00EA5E146CF876004AB0EC /* AirbrakeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA00146CF876004AB0EC /* AirbrakeModel.xcdatamodeld */; };
 		CE00EA5F146CF876004AB0EC /* AirbrakeProject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA04146CF876004AB0EC /* AirbrakeProject.m */; };
-		CE00EA60146CF876004AB0EC /* AirbrakeTablePopulator.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA06146CF876004AB0EC /* AirbrakeTablePopulator.m */; };
 		CE00EA61146CF876004AB0EC /* AirbrakeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA08146CF876004AB0EC /* AirbrakeUser.m */; };
-		CE00EA63146CF876004AB0EC /* Airpad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA0B146CF876004AB0EC /* Airpad.xcdatamodeld */; };
-		CE00EA65146CF876004AB0EC /* AirpadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA10146CF876004AB0EC /* AirpadViewController.m */; };
-		CE00EA66146CF876004AB0EC /* AirpadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE00EA11146CF876004AB0EC /* AirpadViewController.xib */; };
 		CE00EA68146CF876004AB0EC /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA18146CF876004AB0EC /* IASKAppSettingsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE00EA69146CF876004AB0EC /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA1A146CF876004AB0EC /* IASKAppSettingsWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE00EA6A146CF876004AB0EC /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA1C146CF876004AB0EC /* IASKSpecifierValuesViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -52,6 +46,12 @@
 		CE00EA86146CF876004AB0EC /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA4E146CF876004AB0EC /* UserSettings.m */; };
 		CE00EA8D146CF92E004AB0EC /* SMXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE00EA8C146CF92E004AB0EC /* SMXMLDocument.m */; };
 		CE00EA8F146CF9D4004AB0EC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE00EA8E146CF9D4004AB0EC /* MessageUI.framework */; };
+		CE5210C2146D3E6D00EAF9F9 /* AirbrakeError.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C1146D3E6D00EAF9F9 /* AirbrakeError.m */; };
+		CE5210C5146E0F1B00EAF9F9 /* NSString+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C4146E0F1A00EAF9F9 /* NSString+Shortcuts.m */; };
+		CE5210C8146F286900EAF9F9 /* AirbrakeErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C7146F286900EAF9F9 /* AirbrakeErrorCell.m */; };
+		CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C9146F422E00EAF9F9 /* DGSwitch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE521111146F422F00EAF9F9 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5210F8146F422E00EAF9F9 /* slider.png */; };
+		CEB9A64A146D08D6008901DB /* AirbrakeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEB9A648146D08D6008901DB /* AirbrakeModel.xcdatamodeld */; };
 		CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
 		CEC636DD146CF7FE0036FA02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DC146CF7FE0036FA02 /* Foundation.framework */; };
 		CEC636DF146CF7FE0036FA02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */; };
@@ -59,7 +59,6 @@
 		CEC636E7146CF7FE0036FA02 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */; };
 		CEC636E9146CF7FE0036FA02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC636E8146CF7FE0036FA02 /* main.m */; };
 		CEC636ED146CF7FE0036FA02 /* AirpadAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */; };
-		CEC636F0146CF7FE0036FA02 /* Airpad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */; };
 		CEC636F8146CF7FE0036FA02 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636F7146CF7FE0036FA02 /* SenTestingKit.framework */; };
 		CEC636F9146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
 		CEC636FA146CF7FE0036FA02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DC146CF7FE0036FA02 /* Foundation.framework */; };
@@ -82,25 +81,15 @@
 		CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AirbrakeDetailView.xib; sourceTree = "<group>"; };
 		CE00E9F7146CF876004AB0EC /* AirbrakeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeDetailViewController.h; sourceTree = "<group>"; };
 		CE00E9F8146CF876004AB0EC /* AirbrakeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeDetailViewController.m; sourceTree = "<group>"; };
-		CE00E9F9146CF876004AB0EC /* AirbrakeError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeError.h; sourceTree = "<group>"; };
-		CE00E9FA146CF876004AB0EC /* AirbrakeError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeError.m; sourceTree = "<group>"; };
 		CE00E9FB146CF876004AB0EC /* AirbrakeFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeFetcher.h; sourceTree = "<group>"; };
 		CE00E9FC146CF876004AB0EC /* AirbrakeFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeFetcher.m; sourceTree = "<group>"; };
 		CE00E9FD146CF876004AB0EC /* AirbrakeListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AirbrakeListView.xib; sourceTree = "<group>"; };
 		CE00E9FE146CF876004AB0EC /* AirbrakeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeListViewController.h; sourceTree = "<group>"; };
 		CE00E9FF146CF876004AB0EC /* AirbrakeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeListViewController.m; sourceTree = "<group>"; };
-		CE00EA01146CF876004AB0EC /* AirbrakeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AirbrakeModel.xcdatamodel; sourceTree = "<group>"; };
-		CE00EA02146CF876004AB0EC /* AirbrakePopulatorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakePopulatorDelegate.h; sourceTree = "<group>"; };
 		CE00EA03146CF876004AB0EC /* AirbrakeProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeProject.h; sourceTree = "<group>"; };
 		CE00EA04146CF876004AB0EC /* AirbrakeProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeProject.m; sourceTree = "<group>"; };
-		CE00EA05146CF876004AB0EC /* AirbrakeTablePopulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeTablePopulator.h; sourceTree = "<group>"; };
-		CE00EA06146CF876004AB0EC /* AirbrakeTablePopulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeTablePopulator.m; sourceTree = "<group>"; };
 		CE00EA07146CF876004AB0EC /* AirbrakeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeUser.h; sourceTree = "<group>"; };
 		CE00EA08146CF876004AB0EC /* AirbrakeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeUser.m; sourceTree = "<group>"; };
-		CE00EA0C146CF876004AB0EC /* Airpad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Airpad.xcdatamodel; sourceTree = "<group>"; };
-		CE00EA0F146CF876004AB0EC /* AirpadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirpadViewController.h; sourceTree = "<group>"; };
-		CE00EA10146CF876004AB0EC /* AirpadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirpadViewController.m; sourceTree = "<group>"; };
-		CE00EA12146CF876004AB0EC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AirpadViewController.xib; sourceTree = "<group>"; };
 		CE00EA17146CF876004AB0EC /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		CE00EA18146CF876004AB0EC /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		CE00EA19146CF876004AB0EC /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -156,6 +145,16 @@
 		CE00EA8B146CF92E004AB0EC /* SMXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMXMLDocument.h; sourceTree = "<group>"; };
 		CE00EA8C146CF92E004AB0EC /* SMXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMXMLDocument.m; sourceTree = "<group>"; };
 		CE00EA8E146CF9D4004AB0EC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		CE5210C0146D3E6D00EAF9F9 /* AirbrakeError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeError.h; sourceTree = "<group>"; };
+		CE5210C1146D3E6D00EAF9F9 /* AirbrakeError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeError.m; sourceTree = "<group>"; };
+		CE5210C3146E0F1A00EAF9F9 /* NSString+Shortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Shortcuts.h"; sourceTree = "<group>"; };
+		CE5210C4146E0F1A00EAF9F9 /* NSString+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Shortcuts.m"; sourceTree = "<group>"; };
+		CE5210C6146F286800EAF9F9 /* AirbrakeErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeErrorCell.h; sourceTree = "<group>"; };
+		CE5210C7146F286900EAF9F9 /* AirbrakeErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeErrorCell.m; sourceTree = "<group>"; };
+		CE5210C9146F422E00EAF9F9 /* DGSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGSwitch.m; sourceTree = "<group>"; };
+		CE5210F8146F422E00EAF9F9 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
+		CE521112146F424000EAF9F9 /* DGSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGSwitch.h; sourceTree = "<group>"; };
+		CEB9A649146D08D6008901DB /* AirbrakeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AirbrakeModel.xcdatamodel; sourceTree = "<group>"; };
 		CEC636D6146CF7FE0036FA02 /* Airpad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airpad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC636DA146CF7FE0036FA02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEC636DC146CF7FE0036FA02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -167,7 +166,6 @@
 		CEC636EA146CF7FE0036FA02 /* Airpad-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Airpad-Prefix.pch"; sourceTree = "<group>"; };
 		CEC636EB146CF7FE0036FA02 /* AirpadAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirpadAppDelegate.h; sourceTree = "<group>"; };
 		CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirpadAppDelegate.m; sourceTree = "<group>"; };
-		CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Airpad.xcdatamodel; sourceTree = "<group>"; };
 		CEC636F6146CF7FE0036FA02 /* AirpadTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirpadTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC636F7146CF7FE0036FA02 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		CEC63700146CF7FE0036FA02 /* AirpadTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AirpadTests-Info.plist"; sourceTree = "<group>"; };
@@ -203,60 +201,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CE00E9F4146CF876004AB0EC /* Airpad */ = {
+		CE00E9F5146CF876004AB0EC /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				CE00E9F5146CF876004AB0EC /* Airpad */,
-			);
-			name = Airpad;
-			sourceTree = SOURCE_ROOT;
-		};
-		CE00E9F5146CF876004AB0EC /* Airpad */ = {
-			isa = PBXGroup;
-			children = (
-				CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */,
-				CE00E9F7146CF876004AB0EC /* AirbrakeDetailViewController.h */,
-				CE00E9F8146CF876004AB0EC /* AirbrakeDetailViewController.m */,
-				CE00E9F9146CF876004AB0EC /* AirbrakeError.h */,
-				CE00E9FA146CF876004AB0EC /* AirbrakeError.m */,
 				CE00E9FB146CF876004AB0EC /* AirbrakeFetcher.h */,
 				CE00E9FC146CF876004AB0EC /* AirbrakeFetcher.m */,
-				CE00E9FD146CF876004AB0EC /* AirbrakeListView.xib */,
-				CE00E9FE146CF876004AB0EC /* AirbrakeListViewController.h */,
-				CE00E9FF146CF876004AB0EC /* AirbrakeListViewController.m */,
-				CE00EA00146CF876004AB0EC /* AirbrakeModel.xcdatamodeld */,
-				CE00EA02146CF876004AB0EC /* AirbrakePopulatorDelegate.h */,
-				CE00EA03146CF876004AB0EC /* AirbrakeProject.h */,
-				CE00EA04146CF876004AB0EC /* AirbrakeProject.m */,
-				CE00EA05146CF876004AB0EC /* AirbrakeTablePopulator.h */,
-				CE00EA06146CF876004AB0EC /* AirbrakeTablePopulator.m */,
-				CE00EA07146CF876004AB0EC /* AirbrakeUser.h */,
-				CE00EA08146CF876004AB0EC /* AirbrakeUser.m */,
-				CE00EA0B146CF876004AB0EC /* Airpad.xcdatamodeld */,
-				CE00EA0F146CF876004AB0EC /* AirpadViewController.h */,
-				CE00EA10146CF876004AB0EC /* AirpadViewController.m */,
-				CE00EA11146CF876004AB0EC /* AirpadViewController.xib */,
-				CE00EA15146CF876004AB0EC /* InAppSettingsKit */,
-				CE00EA8B146CF92E004AB0EC /* SMXMLDocument.h */,
-				CE00EA8C146CF92E004AB0EC /* SMXMLDocument.m */,
-				CE00EA3F146CF876004AB0EC /* NSArray+FunctionalUtils.h */,
-				CE00EA40146CF876004AB0EC /* NSArray+FunctionalUtils.m */,
-				CE00EA41146CF876004AB0EC /* NSDate+DateISOParser.h */,
-				CE00EA42146CF876004AB0EC /* NSDate+DateISOParser.m */,
-				CE00EA43146CF876004AB0EC /* NSManagedObject+DSL.h */,
-				CE00EA44146CF876004AB0EC /* NSManagedObject+DSL.m */,
 				CE00EA45146CF876004AB0EC /* PagedXmlFetcher.h */,
 				CE00EA46146CF876004AB0EC /* PagedXmlFetcher.m */,
 				CE00EA47146CF876004AB0EC /* ProjectFetcher.h */,
 				CE00EA48146CF876004AB0EC /* ProjectFetcher.m */,
-				CE00EA49146CF876004AB0EC /* ProjectsMenuView.xib */,
-				CE00EA4A146CF876004AB0EC /* ProjectsMenuViewController.h */,
-				CE00EA4B146CF876004AB0EC /* ProjectsMenuViewController.m */,
-				CE00EA4C146CF876004AB0EC /* Settings.bundle */,
 				CE00EA4D146CF876004AB0EC /* UserSettings.h */,
 				CE00EA4E146CF876004AB0EC /* UserSettings.m */,
 			);
-			path = Airpad;
+			name = Backend;
 			sourceTree = "<group>";
 		};
 		CE00EA15146CF876004AB0EC /* InAppSettingsKit */ = {
@@ -267,7 +224,8 @@
 				CE00EA28146CF876004AB0EC /* Views */,
 				CE00EA37146CF876004AB0EC /* Xibs */,
 			);
-			path = InAppSettingsKit;
+			name = InAppSettingsKit;
+			path = Airpad/InAppSettingsKit;
 			sourceTree = "<group>";
 		};
 		CE00EA16146CF876004AB0EC /* Controllers */ = {
@@ -334,10 +292,72 @@
 			path = Xibs;
 			sourceTree = "<group>";
 		};
+		CEB9A644146D0833008901DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE5210C9146F422E00EAF9F9 /* DGSwitch.m */,
+				CE521112146F424000EAF9F9 /* DGSwitch.h */,
+				CE5210F8146F422E00EAF9F9 /* slider.png */,
+				CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */,
+				CE00E9F7146CF876004AB0EC /* AirbrakeDetailViewController.h */,
+				CE00E9F8146CF876004AB0EC /* AirbrakeDetailViewController.m */,
+				CE00E9FD146CF876004AB0EC /* AirbrakeListView.xib */,
+				CE00E9FE146CF876004AB0EC /* AirbrakeListViewController.h */,
+				CE00E9FF146CF876004AB0EC /* AirbrakeListViewController.m */,
+				CE5210C6146F286800EAF9F9 /* AirbrakeErrorCell.h */,
+				CE5210C7146F286900EAF9F9 /* AirbrakeErrorCell.m */,
+				CE00EA49146CF876004AB0EC /* ProjectsMenuView.xib */,
+				CE00EA4A146CF876004AB0EC /* ProjectsMenuViewController.h */,
+				CE00EA4B146CF876004AB0EC /* ProjectsMenuViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CEB9A645146D0854008901DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE5210C0146D3E6D00EAF9F9 /* AirbrakeError.h */,
+				CE5210C1146D3E6D00EAF9F9 /* AirbrakeError.m */,
+				CE00EA03146CF876004AB0EC /* AirbrakeProject.h */,
+				CE00EA04146CF876004AB0EC /* AirbrakeProject.m */,
+				CE00EA07146CF876004AB0EC /* AirbrakeUser.h */,
+				CE00EA08146CF876004AB0EC /* AirbrakeUser.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		CEB9A646146D087D008901DB /* Core Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE00EA3F146CF876004AB0EC /* NSArray+FunctionalUtils.h */,
+				CE00EA40146CF876004AB0EC /* NSArray+FunctionalUtils.m */,
+				CE5210C3146E0F1A00EAF9F9 /* NSString+Shortcuts.h */,
+				CE5210C4146E0F1A00EAF9F9 /* NSString+Shortcuts.m */,
+				CE00EA41146CF876004AB0EC /* NSDate+DateISOParser.h */,
+				CE00EA42146CF876004AB0EC /* NSDate+DateISOParser.m */,
+				CE00EA43146CF876004AB0EC /* NSManagedObject+DSL.h */,
+				CE00EA44146CF876004AB0EC /* NSManagedObject+DSL.m */,
+			);
+			name = "Core Extensions";
+			path = Airpad;
+			sourceTree = "<group>";
+		};
+		CEB9A647146D0896008901DB /* SMXML */ = {
+			isa = PBXGroup;
+			children = (
+				CE00EA8B146CF92E004AB0EC /* SMXMLDocument.h */,
+				CE00EA8C146CF92E004AB0EC /* SMXMLDocument.m */,
+			);
+			name = SMXML;
+			path = Airpad;
+			sourceTree = "<group>";
+		};
 		CEC636CB146CF7FE0036FA02 = {
 			isa = PBXGroup;
 			children = (
-				CE00EA8E146CF9D4004AB0EC /* MessageUI.framework */,
+				CEB9A647146D0896008901DB /* SMXML */,
+				CE00EA15146CF876004AB0EC /* InAppSettingsKit */,
+				CEB9A646146D087D008901DB /* Core Extensions */,
 				CEC636E2146CF7FE0036FA02 /* Airpad */,
 				CEC636FE146CF7FE0036FA02 /* AirpadTests */,
 				CEC636D9146CF7FE0036FA02 /* Frameworks */,
@@ -357,6 +377,7 @@
 		CEC636D9146CF7FE0036FA02 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE00EA8E146CF9D4004AB0EC /* MessageUI.framework */,
 				CEC636DA146CF7FE0036FA02 /* UIKit.framework */,
 				CEC636DC146CF7FE0036FA02 /* Foundation.framework */,
 				CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */,
@@ -371,8 +392,9 @@
 			children = (
 				CEC636EB146CF7FE0036FA02 /* AirpadAppDelegate.h */,
 				CEC636EC146CF7FE0036FA02 /* AirpadAppDelegate.m */,
-				CE00E9F4146CF876004AB0EC /* Airpad */,
-				CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */,
+				CEB9A644146D0833008901DB /* Views */,
+				CEB9A645146D0854008901DB /* Models */,
+				CE00E9F5146CF876004AB0EC /* Backend */,
 				CEC636E3146CF7FE0036FA02 /* Supporting Files */,
 			);
 			path = Airpad;
@@ -381,6 +403,8 @@
 		CEC636E3146CF7FE0036FA02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CEB9A648146D08D6008901DB /* AirbrakeModel.xcdatamodeld */,
+				CE00EA4C146CF876004AB0EC /* Settings.bundle */,
 				CEC636E4146CF7FE0036FA02 /* Airpad-Info.plist */,
 				CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */,
 				CEC636E8146CF7FE0036FA02 /* main.m */,
@@ -482,7 +506,6 @@
 				CEC636E7146CF7FE0036FA02 /* InfoPlist.strings in Resources */,
 				CE00EA58146CF876004AB0EC /* AirbrakeDetailView.xib in Resources */,
 				CE00EA5C146CF876004AB0EC /* AirbrakeListView.xib in Resources */,
-				CE00EA66146CF876004AB0EC /* AirpadViewController.xib in Resources */,
 				CE00EA77146CF876004AB0EC /* IASKAppSettingsView.xib in Resources */,
 				CE00EA78146CF876004AB0EC /* IASKAppSettingsWebView.xib in Resources */,
 				CE00EA79146CF876004AB0EC /* IASKPSSliderSpecifierViewCell.xib in Resources */,
@@ -491,6 +514,7 @@
 				CE00EA7C146CF876004AB0EC /* IASKSpecifierValuesView.xib in Resources */,
 				CE00EA83146CF876004AB0EC /* ProjectsMenuView.xib in Resources */,
 				CE00EA85146CF876004AB0EC /* Settings.bundle in Resources */,
+				CE521111146F422F00EAF9F9 /* slider.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,17 +551,11 @@
 			files = (
 				CEC636E9146CF7FE0036FA02 /* main.m in Sources */,
 				CEC636ED146CF7FE0036FA02 /* AirpadAppDelegate.m in Sources */,
-				CEC636F0146CF7FE0036FA02 /* Airpad.xcdatamodeld in Sources */,
 				CE00EA59146CF876004AB0EC /* AirbrakeDetailViewController.m in Sources */,
-				CE00EA5A146CF876004AB0EC /* AirbrakeError.m in Sources */,
 				CE00EA5B146CF876004AB0EC /* AirbrakeFetcher.m in Sources */,
 				CE00EA5D146CF876004AB0EC /* AirbrakeListViewController.m in Sources */,
-				CE00EA5E146CF876004AB0EC /* AirbrakeModel.xcdatamodeld in Sources */,
 				CE00EA5F146CF876004AB0EC /* AirbrakeProject.m in Sources */,
-				CE00EA60146CF876004AB0EC /* AirbrakeTablePopulator.m in Sources */,
 				CE00EA61146CF876004AB0EC /* AirbrakeUser.m in Sources */,
-				CE00EA63146CF876004AB0EC /* Airpad.xcdatamodeld in Sources */,
-				CE00EA65146CF876004AB0EC /* AirpadViewController.m in Sources */,
 				CE00EA68146CF876004AB0EC /* IASKAppSettingsViewController.m in Sources */,
 				CE00EA69146CF876004AB0EC /* IASKAppSettingsWebViewController.m in Sources */,
 				CE00EA6A146CF876004AB0EC /* IASKSpecifierValuesViewController.m in Sources */,
@@ -561,6 +579,11 @@
 				CE00EA84146CF876004AB0EC /* ProjectsMenuViewController.m in Sources */,
 				CE00EA86146CF876004AB0EC /* UserSettings.m in Sources */,
 				CE00EA8D146CF92E004AB0EC /* SMXMLDocument.m in Sources */,
+				CEB9A64A146D08D6008901DB /* AirbrakeModel.xcdatamodeld in Sources */,
+				CE5210C2146D3E6D00EAF9F9 /* AirbrakeError.m in Sources */,
+				CE5210C5146E0F1B00EAF9F9 /* NSString+Shortcuts.m in Sources */,
+				CE5210C8146F286900EAF9F9 /* AirbrakeErrorCell.m in Sources */,
+				CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,14 +606,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		CE00EA11146CF876004AB0EC /* AirpadViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE00EA12146CF876004AB0EC /* en */,
-			);
-			name = AirpadViewController.xib;
-			sourceTree = "<group>";
-		};
 		CEC636E5146CF7FE0036FA02 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -626,6 +641,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -645,6 +661,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -746,33 +763,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		CE00EA00146CF876004AB0EC /* AirbrakeModel.xcdatamodeld */ = {
+		CEB9A648146D08D6008901DB /* AirbrakeModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				CE00EA01146CF876004AB0EC /* AirbrakeModel.xcdatamodel */,
+				CEB9A649146D08D6008901DB /* AirbrakeModel.xcdatamodel */,
 			);
-			currentVersion = CE00EA01146CF876004AB0EC /* AirbrakeModel.xcdatamodel */;
+			currentVersion = CEB9A649146D08D6008901DB /* AirbrakeModel.xcdatamodel */;
 			path = AirbrakeModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		CE00EA0B146CF876004AB0EC /* Airpad.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				CE00EA0C146CF876004AB0EC /* Airpad.xcdatamodel */,
-			);
-			currentVersion = CE00EA0C146CF876004AB0EC /* Airpad.xcdatamodel */;
-			path = Airpad.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		CEC636EE146CF7FE0036FA02 /* Airpad.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */,
-			);
-			currentVersion = CEC636EF146CF7FE0036FA02 /* Airpad.xcdatamodel */;
-			path = Airpad.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

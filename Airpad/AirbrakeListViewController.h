@@ -14,7 +14,8 @@
 @interface AirbrakeListViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBox;
 @property (weak, nonatomic) IBOutlet UITableView *airbrakeTable;
-@property(nonatomic, assign) id<AirbrakePopulatorDelegate> delegate;
-@property(nonatomic, retain) AirbrakeFetcher* fetcher;
-@property(nonatomic, retain) AirbrakeProject* projectFilter; 
+@property (nonatomic, strong) AirbrakeUser* user;
+@property (nonatomic, strong) NSArray* visibleAirbrakes;
+
+- (void) recalculateVisible;
 @end

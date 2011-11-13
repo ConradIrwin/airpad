@@ -15,4 +15,5 @@
 
 @interface NSSet (FunctionalUtils)
 -(id)detectWithBlock: (bool(^)(id)) block;
+-(id)anyWithBlock: (bool(^)(id)) block;
 @end

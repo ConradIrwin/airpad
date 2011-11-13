@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "PagedXmlFetcher.h"
+@class AirbrakeUser;
+@class AirbrakeError;
 
 @interface AirbrakeFetcher : NSObject <PagedXmlFetcherDelegate>
-@property(readonly) NSMutableArray* airbrakes;
+@property (nonatomic, weak) AirbrakeUser *user;
+@property (nonatomic, strong) PagedXmlFetcher *fetcher;
+- initWithUser:(AirbrakeUser *)user;
 @end

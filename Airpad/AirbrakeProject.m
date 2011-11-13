@@ -18,4 +18,12 @@
 @dynamic errors;
 @dynamic user;
 
+- (NSString *)nameWithFallback
+{
+    if (self.name) {
+        return self.name;
+    } else {
+        return [NSString stringWithFormat:@"Project %@", self.projectId]; 
+    }
+}
 @end

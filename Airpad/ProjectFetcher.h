@@ -12,6 +12,5 @@
 #import "AirpadAppDelegate.h"
 
 @interface ProjectFetcher : NSObject <PagedXmlFetcherDelegate>
-@property(nonatomic, readonly) NSMutableArray* projects;
 -(ProjectFetcher *)initWithUser:(AirbrakeUser*)user;
 @end

@@ -27,7 +27,6 @@
 @synthesize viewController = _viewController;
 
 - (void)showSettingsDialogIfNecessary {
-    NSLog(@"%@", [[[UserSettings userSettings] currentUser] projects]);
     if ([[UserSettings userSettings] isSetupRequired]) {
         IASKAppSettingsViewController *setupConfig = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
         
@@ -64,16 +63,14 @@
                                            nil];
     
     self.viewController.delegate = detailController;
-    listController.delegate = detailController;
-    listController.fetcher = [[AirbrakeFetcher alloc] init];
-    detailController.projectFetcher = [[ProjectFetcher alloc] init];
     detailController.listView = listController;
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
     [self showSettingsDialogIfNecessary];
-
+    [[UserSettings currentUser] downloadAirbrakes];
+    NSLog(@"Started download %@", [UserSettings currentUser]);
     return YES;
 }
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
