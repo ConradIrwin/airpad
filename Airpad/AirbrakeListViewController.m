@@ -93,7 +93,6 @@
             if (index != NSNotFound) {
                 [airbrakeTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
-            NSLog(@"Selected index %i : %i", index, NSNotFound);
         }
     } else {
         NSLog(@"Received unexpected event!");  

@@ -10,8 +10,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define SLIDER_X_ON  0
-#define SLIDER_X_OFF  -56
+// The width of one side (not including the width of the slider)
+#define SLIDER_X_OFF  -64.0f
 #define SLIDER_TAG  430
+// The width of the box (i.e. wide enough for one side + the slider)
+#define SLIDER_WIDTH 103.0f
+#define SLIDER_HEIGHT 27.0f
 
 @implementation DGSwitch
 
@@ -19,12 +23,12 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    CGRect cframe = CGRectMake(frame.origin.x, frame.origin.y, 95.0f, 27.0f);
+    CGRect cframe = CGRectMake(frame.origin.x, frame.origin.y, SLIDER_WIDTH, SLIDER_HEIGHT);
     self = [super initWithFrame:cframe];
     if (self) {
         // Initialization code
         self.clipsToBounds = YES;
-        CGRect cframe = CGRectMake(self.frame.origin.x, self.frame.origin.y, 95.0f, 27.0f);
+        CGRect cframe = CGRectMake(self.frame.origin.x, self.frame.origin.y, SLIDER_WIDTH, SLIDER_HEIGHT);
         self.layer.cornerRadius = 4;
         self.frame = cframe;
         [self setNeedsDisplay];
@@ -36,7 +40,7 @@
     self=[super initWithCoder: aDecoder];
     if(self) {
         self.clipsToBounds = YES;
-        CGRect cframe = CGRectMake(self.frame.origin.x, self.frame.origin.y, 95.0f, 27.0f);
+        CGRect cframe = CGRectMake(self.frame.origin.x, self.frame.origin.y, SLIDER_WIDTH, SLIDER_HEIGHT);
         self.layer.cornerRadius = 4;
         self.frame = cframe;
         [self setNeedsDisplay];
@@ -63,7 +67,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     tapPt = [[touches anyObject] locationInView: self];
     xPos = tapPt.x + SLIDER_X_OFF;
-    
+    moved = false;
     UIImageView *slider = (UIImageView *)[self viewWithTag:SLIDER_TAG];
     CGRect sliderFrame = slider.frame;
     if (xPos > SLIDER_X_ON) {
@@ -78,6 +82,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint tappedPt = [[touches anyObject] locationInView: self];
     xPos = tappedPt.x + SLIDER_X_OFF;
+    moved = true;
     
     UIImageView *slider = (UIImageView *)[self viewWithTag:SLIDER_TAG];
     CGRect sliderFrame = slider.frame;
@@ -96,6 +101,7 @@
 	UIImageView *slider = (UIImageView *)[self viewWithTag:SLIDER_TAG];
     CGRect sliderFrame = slider.frame;
     BOOL value;
+    
     if (sliderFrame.origin.x < (SLIDER_X_OFF / 2)) {
         sliderFrame.origin.x = SLIDER_X_OFF;
         value = NO;
@@ -109,6 +115,16 @@
     } else {
         sliderFrame.origin.x = SLIDER_X_ON;
         value = YES;
+    }
+    
+    if (!moved) {
+        if (_on) {
+            sliderFrame.origin.x = SLIDER_X_OFF;
+            value = NO;
+        } else {
+            sliderFrame.origin.x = SLIDER_X_ON;
+            value = YES;         
+        }
     }
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.1];	

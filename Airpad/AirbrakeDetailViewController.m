@@ -16,8 +16,8 @@
     UIPopoverController *projectsMenu;
     UIPopoverController *airbrakesMenu;
 }
+@synthesize dataTable;
 @synthesize toolbar;
-@synthesize resolveButton;
 @synthesize resolveSlider;
 @synthesize titleLabel;
 @synthesize occurrenceLabel;
@@ -26,12 +26,14 @@
 @synthesize listView;
 
 @synthesize user;
+@synthesize dataTableDelegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.user = [UserSettings currentUser];
+        self.dataTableDelegate = [[DataTableDelegate alloc] init];
         [self.user addObserver:self forKeyPath:@"currentAirbrake.details" options:NSKeyValueObservingOptionInitial context:@"currentAirbrake"];
         [self.user addObserver:self forKeyPath:@"projectFilter" options: NSKeyValueObservingOptionInitial context: @"projectFilter"];
     }
@@ -53,30 +55,24 @@
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
-
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.dataTable.delegate = dataTableDelegate;
+    self.dataTable.dataSource = dataTableDelegate;
+    [self.dataTable reloadData];
 }
-*/
 
 - (void)viewDidUnload
 {
     [self setToolbar:nil];
-    [self setResolveButton:nil];
     [self setTitleLabel:nil];
     [self setOccurrenceLabel:nil];
     [self setBacktraceText:nil];
     [self setProjectMenuButton:nil];
     [self setResolveSlider:nil];
+    [self setDataTable:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -151,21 +147,12 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == @"currentAirbrake") {
         
-        if (user.currentAirbrake.hasDetails) {
-            [backtraceText setText: user.currentAirbrake.backtrace];
-            [resolveButton setEnabled: true];
-            if ([user.currentAirbrake.isResolved boolValue]) {
-                [resolveButton setTitle: @"Resolved" forState: UIControlStateNormal];
-            } else {
-                [resolveButton setTitle: @"Resolve" forState: UIControlStateNormal];
-            }
-        } else {
+        if (!user.currentAirbrake.hasDetails) {
             [user.currentAirbrake loadDetails];
-            [resolveButton setEnabled:false];
-            [resolveButton setTitle: @"Loading…" forState: UIControlStateDisabled];
-            [backtraceText setText: @""];
         }
         
+        [backtraceText setText: user.currentAirbrake.backtrace];
+        [resolveSlider setOn: [user.currentAirbrake.isResolved boolValue]];
         [titleLabel setText: user.currentAirbrake.errorMessage];
         [occurrenceLabel setText: [self occurrenceDescription]];        
         
@@ -179,19 +166,6 @@
             [projectsMenu dismissPopoverAnimated:YES];
             projectsMenu = nil;
         }
-    }
-}
-
-- (IBAction)resolveClicked:(id)sender {
-    if (user.currentAirbrake) {
-        if ([user.currentAirbrake.isResolved boolValue]) {
-            [user.currentAirbrake reopen];
-            [resolveButton setTitle: @"Undoing…" forState: UIControlStateDisabled];
-        } else {
-            [user.currentAirbrake resolve];
-            [resolveButton setTitle: @"Resolving…" forState: UIControlStateDisabled];
-        }
-        [resolveButton setEnabled:false];
     }
 }
 
@@ -214,6 +188,14 @@
 - (IBAction)openClicked:(id)sender {
     if (user.currentAirbrake) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat: @"http://rapportive.airbrake.io/errors/%i", user.currentAirbrake.airbrakeId]]];
+    }
+}
+
+- (IBAction)resolveStateChanged:(id)sender {
+    if (resolveSlider.on) {
+        [user.currentAirbrake resolve];
+    } else {
+        [user.currentAirbrake reopen];
     }
 }
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {

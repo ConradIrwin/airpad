@@ -32,6 +32,7 @@
 @property (nonatomic) bool hasDetails;
 @property (nonatomic) bool justLoaded;
 @property (nonatomic, strong) PagedXmlFetcher *fetcher;
+@property (nonatomic, strong) NSNumber *requestedResolve;
 
 + (NSSet *)setOfAirbrakesFromXml:(SMXMLDocument *)xml forUser: (AirbrakeUser *) user;
 - (double) occurrenceRate;

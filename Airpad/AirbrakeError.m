@@ -26,6 +26,7 @@
 @dynamic errorMessage;
 
 @synthesize hasDetails, justLoaded;
+@synthesize requestedResolve;
 @synthesize fetcher;
 
 - (void)importBasicsFromElement: (SMXMLElement *)element {
@@ -107,10 +108,16 @@
 }
 
 - (void) resolve {
-    [self putBody: @"<group><resolved>true</resolved></group>\n"];
+    self.requestedResolve = [NSNumber numberWithBool: true];
+    if (![self.isResolved boolValue] && !self.fetcher) {
+        [self putBody: @"<group><resolved>true</resolved></group>\n"];
+    }
 }
 - (void) reopen{
-    [self putBody: @"<group><resolved>false</resolved></group>\n"];
+    self.requestedResolve = [NSNumber numberWithBool: false];
+    if ([self.isResolved boolValue] && !self.fetcher) {
+        [self putBody: @"<group><resolved>false</resolved></group>\n"];
+    }
 }
 
 #pragma mark - pagedXmlFetcher delegate
@@ -123,6 +130,13 @@
     [self importDetailsFromElement: document.root];
     // Don't call fetchNextPage because we don't actually `have` a next page at this point.
     self.fetcher = nil;
+    if (self.requestedResolve && [self.requestedResolve boolValue] != [self.isResolved boolValue]) {
+        if ([self.requestedResolve boolValue]) {
+            [self resolve];
+        } else {
+            [self reopen];
+        }
+    }
 }
 
 - (void)pagedXmlFetcher:(PagedXmlFetcher *)pagedXmlFetcher didFailWithError:(NSError *)error {

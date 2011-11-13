@@ -52,6 +52,7 @@
 		CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C9146F422E00EAF9F9 /* DGSwitch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE521111146F422F00EAF9F9 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5210F8146F422E00EAF9F9 /* slider.png */; };
 		CEB9A64A146D08D6008901DB /* AirbrakeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEB9A648146D08D6008901DB /* AirbrakeModel.xcdatamodeld */; };
+		CEC44B86146F568D000CB29D /* DataTableDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC44B85146F568D000CB29D /* DataTableDelegate.m */; };
 		CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
 		CEC636DD146CF7FE0036FA02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DC146CF7FE0036FA02 /* Foundation.framework */; };
 		CEC636DF146CF7FE0036FA02 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DE146CF7FE0036FA02 /* CoreGraphics.framework */; };
@@ -155,6 +156,8 @@
 		CE5210F8146F422E00EAF9F9 /* slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider.png; sourceTree = "<group>"; };
 		CE521112146F424000EAF9F9 /* DGSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGSwitch.h; sourceTree = "<group>"; };
 		CEB9A649146D08D6008901DB /* AirbrakeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AirbrakeModel.xcdatamodel; sourceTree = "<group>"; };
+		CEC44B84146F568D000CB29D /* DataTableDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTableDelegate.h; sourceTree = "<group>"; };
+		CEC44B85146F568D000CB29D /* DataTableDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTableDelegate.m; sourceTree = "<group>"; };
 		CEC636D6146CF7FE0036FA02 /* Airpad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Airpad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC636DA146CF7FE0036FA02 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEC636DC146CF7FE0036FA02 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -299,6 +302,8 @@
 				CE521112146F424000EAF9F9 /* DGSwitch.h */,
 				CE5210F8146F422E00EAF9F9 /* slider.png */,
 				CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */,
+				CEC44B84146F568D000CB29D /* DataTableDelegate.h */,
+				CEC44B85146F568D000CB29D /* DataTableDelegate.m */,
 				CE00E9F7146CF876004AB0EC /* AirbrakeDetailViewController.h */,
 				CE00E9F8146CF876004AB0EC /* AirbrakeDetailViewController.m */,
 				CE00E9FD146CF876004AB0EC /* AirbrakeListView.xib */,
@@ -584,6 +589,7 @@
 				CE5210C5146E0F1B00EAF9F9 /* NSString+Shortcuts.m in Sources */,
 				CE5210C8146F286900EAF9F9 /* AirbrakeErrorCell.m in Sources */,
 				CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */,
+				CEC44B86146F568D000CB29D /* DataTableDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

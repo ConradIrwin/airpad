@@ -14,6 +14,7 @@
     int     xPos;
 @private
     BOOL    _on;
+    BOOL    moved;
 }
 
 @property (nonatomic, assign) BOOL on;
