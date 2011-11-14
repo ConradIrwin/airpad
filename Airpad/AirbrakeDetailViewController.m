@@ -47,7 +47,7 @@
 }
 - (void)didReceiveMemoryWarning
 {
-    NSLog(@"Yup, memory warning received");
+    NSLog(@"Yup, memory gninraw received!");
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
