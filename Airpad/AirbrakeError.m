@@ -25,6 +25,7 @@
 @dynamic user;
 @dynamic errorMessage;
 
+@synthesize data;
 @synthesize hasDetails, justLoaded;
 @synthesize requestedResolve;
 @synthesize fetcher;
@@ -49,8 +50,50 @@
                      stringByRegex:@".*/gems/" replacement:@""]
                      stringByRegex:@".*\\[PROJECT_ROOT\\]/"replacement:@"app/"];
     }];
-    
     self.backtrace = [lines componentsJoinedByString:@"\n"];
+
+
+    NSMutableDictionary *summary     = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *params      = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *environment = [[NSMutableDictionary alloc] init];
+    
+    for (SMXMLElement *child in [[element childNamed: @"request"] childNamed: @"params"].children) {
+        [params setValue: [child value] forKey: [child name]];
+    }
+    
+    for (SMXMLElement *child in [element childNamed: @"environment"].children) {
+        [environment setValue: [child value] forKey: [child name]];
+    }
+    
+    NSString* url = [[[element childNamed: @"request"] childNamed: @"url"] value];
+    if (url && ![url isEqualToString:@""]) {
+        [summary setValue: url forKey:  @"URL"];
+    }
+    
+    NSString* file = [[element childNamed: @"file"] value];
+    if (file && ![file isEqualToString:@""]) {
+        [summary setValue: file forKey: @"File"];
+    }
+    
+    NSString* action = [[element childNamed: @"action"] value];
+    NSString* controller = [[element childNamed: @"controller"] value];
+    
+    if (action && controller && ![action isEqualToString:@""] && ![controller isEqualToString:@""]) {
+        [summary setValue: [controller stringByAppendingFormat: @"#%@", action] forKey:@"Action"];
+    }
+    
+    
+    NSMutableDictionary *newData     = [[NSMutableDictionary alloc] init];
+    if ([summary count]) {
+        [newData setObject: summary forKey:@"Summary"];
+    }
+    if ([params count]) {
+        [newData setObject: params forKey:@"Parameters"];
+    }
+    if ([environment count]) {
+        [newData setObject: environment forKey:@"Environment"];
+    }
+    self.data = newData;
     self.hasDetails = true;
     [self didChangeValueForKey:@"details"];
 }

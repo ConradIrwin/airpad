@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *occurrenceLabel;
 @property (weak, nonatomic) IBOutlet UITextView *backtraceText;
 @property (weak, nonatomic) AirbrakeListViewController* listView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *viewChanger;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *projectMenuButton;
 
 @property (nonatomic, strong) DataTableDelegate *dataTableDelegate;
@@ -30,5 +31,6 @@
 - (IBAction)projectsClicked:(id)sender;
 - (IBAction)openClicked:(id)sender;
 - (IBAction)resolveStateChanged:(id)sender;
+- (IBAction)viewChangerChanged:(id)sender;
 
 @end

@@ -24,6 +24,7 @@
 @synthesize backtraceText;
 @synthesize projectMenuButton;
 @synthesize listView;
+@synthesize viewChanger;
 
 @synthesize user;
 @synthesize dataTableDelegate;
@@ -55,6 +56,30 @@
 
 #pragma mark - View lifecycle
 
+- (void) fixDataTablePosition{
+    CGRect visibleArea = [self.view bounds];
+    
+    visibleArea.origin.y += 193;
+    visibleArea.size.height -= 193;
+    
+    if (0 == viewChanger.selectedSegmentIndex) {
+        visibleArea.origin.y += visibleArea.size.height;
+    } else {
+        [dataTable setHidden: false];
+    }
+    
+    [UIView animateWithDuration:0.3f
+                     animations:^(){
+                         [dataTable setFrame: visibleArea];
+                     }
+                     completion:^(BOOL finished) {
+                         if (0 == viewChanger.selectedSegmentIndex) {
+                             [dataTable setHidden: true];
+                         }
+                     }
+     ];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
@@ -62,6 +87,7 @@
     self.dataTable.delegate = dataTableDelegate;
     self.dataTable.dataSource = dataTableDelegate;
     [self.dataTable reloadData];
+    [self fixDataTablePosition];
 }
 
 - (void)viewDidUnload
@@ -73,6 +99,7 @@
     [self setProjectMenuButton:nil];
     [self setResolveSlider:nil];
     [self setDataTable:nil];
+    [self setViewChanger:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -91,6 +118,13 @@
         projectsMenu = nil;
     }
 }
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    // Ensure that the dataTable is still either just below the botom of the screen and hidden,
+    // or it's just under the noticescount label.
+    [self fixDataTablePosition];
+}
+
 #pragma mark - Split View Handling
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc {
@@ -154,7 +188,8 @@
         [backtraceText setText: user.currentAirbrake.backtrace];
         [resolveSlider setOn: [user.currentAirbrake.isResolved boolValue]];
         [titleLabel setText: user.currentAirbrake.errorMessage];
-        [occurrenceLabel setText: [self occurrenceDescription]];        
+        [occurrenceLabel setText: [self occurrenceDescription]];
+        [dataTable reloadData];
         
     } else if (context == @"projectFilter") {
         if (!user.projectFilter) {
@@ -187,7 +222,7 @@
 
 - (IBAction)openClicked:(id)sender {
     if (user.currentAirbrake) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat: @"http://rapportive.airbrake.io/errors/%i", user.currentAirbrake.airbrakeId]]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat: @"http://rapportive.airbrake.io/errors/%@", user.currentAirbrake.airbrakeId]]];
     }
 }
 
@@ -197,6 +232,10 @@
     } else {
         [user.currentAirbrake reopen];
     }
+}
+
+- (IBAction)viewChangerChanged:(id)sender {
+    [self fixDataTablePosition];
 }
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     if (projectsMenu == popoverController) {
