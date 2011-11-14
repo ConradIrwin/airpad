@@ -28,7 +28,7 @@
 @property (nonatomic, retain) NSString * errorMessage;
 
 @property (nonatomic, readonly) NSDictionary *details;
-@property (nonatomic, retain) NSDictionary *data;
+@property (nonatomic, retain) NSArray *data;
 
 @property (nonatomic) bool hasDetails;
 @property (nonatomic) bool justLoaded;

@@ -14,6 +14,7 @@
 }
 @synthesize delegate;
 @synthesize pageNumber;
+@synthesize statusCode;
 
 - (id) init {
     self = [super init];
@@ -48,7 +49,8 @@
 
 #pragma mark – NSURLConnection delegation
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response {
+    statusCode = [response statusCode];
     [responseData setLength:0];
 }
 
@@ -61,20 +63,25 @@
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSError *e = nil;
+    NSError *error = nil;
     NSData *data = responseData;
-
+    SMXMLDocument *document;
+    
     // Set these to nil here so that if didFetchXML wants to it can call fetchNextPage
     self->connection = nil;
     self->responseData = nil;
     
-    SMXMLDocument *d= [[SMXMLDocument alloc] initWithAirbrakeData:data error:&e];
-
-    if (e) {
-        NSLog(@"got bad XML: %@", [[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding]); 
-        [delegate pagedXmlFetcher:self didFailWithError:e];
+    if (statusCode != 200) {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat: @"Unexpected HTTP-%i response from airbrake.", statusCode] forKey: NSLocalizedDescriptionKey];
+        error = [NSError errorWithDomain:@"airbrake-api" code:statusCode userInfo: userInfo];
     } else {
-        [delegate pagedXmlFetcher:self didFetchXML:d];
+        document = [[SMXMLDocument alloc] initWithAirbrakeData:data error:&error];
+    }
+
+    if (error) {
+        [delegate pagedXmlFetcher:self didFailWithError:error];
+    } else {
+        [delegate pagedXmlFetcher:self didFetchXML:document];
     }
 }
                                

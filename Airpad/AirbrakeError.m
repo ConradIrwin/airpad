@@ -41,6 +41,63 @@
     self.earliestSeenAt = [NSDate dateWithISO8601String: [[element childNamed:@"created-at"] value]];
 }
 
+- (NSArray *) parseDataFromElement: (SMXMLElement *)element {
+    
+    
+    NSMutableArray *summary     = [[NSMutableArray alloc] init];
+    NSMutableArray *params      = [[NSMutableArray alloc] init];
+    NSMutableArray *environment = [[NSMutableArray alloc] init];
+    
+    for (SMXMLElement *child in [[element childNamed: @"request"] childNamed: @"params"].children) {
+        if ([child value]) {
+            [params addObject: [NSArray arrayWithObjects: [child name], [child value], nil]];
+        }
+    }
+    
+    for (SMXMLElement *child in [element childNamed: @"environment"].children) {
+        if ([child value]) {
+            [environment addObject: [NSArray arrayWithObjects: [child name], [child value], nil]];
+        }
+    }
+    
+    [params sortUsingComparator:^NSComparisonResult(NSArray *obj1, NSArray *obj2) {
+        return [[obj1 objectAtIndex: 0] localizedCaseInsensitiveCompare:[obj2 objectAtIndex:0]];
+    }];
+    
+    [environment sortUsingComparator:^NSComparisonResult(NSArray *obj1, NSArray *obj2) {
+        return [[obj1 objectAtIndex: 0] localizedCaseInsensitiveCompare:[obj2 objectAtIndex:0]];
+    }];
+    
+    NSString* url = [[[element childNamed: @"request"] childNamed: @"url"] value];
+    if (url && ![url isEqualToString:@""]) {
+        [summary addObject: [NSArray arrayWithObjects:@"URL", url, nil]];
+    }
+    
+    NSString* file = [[element childNamed: @"file"] value];
+    if (file && ![file isEqualToString:@""]) {
+        [summary addObject: [NSArray arrayWithObjects:@"File", file, nil]];
+    }
+    
+    NSString* action = [[element childNamed: @"action"] value];
+    NSString* controller = [[element childNamed: @"controller"] value];
+    if (action && controller && ![action isEqualToString:@""] && ![controller isEqualToString:@""]) {
+        [summary addObject: [NSArray arrayWithObjects:@"Action", [controller stringByAppendingFormat: @"#%@", action], nil]];
+    }
+    
+    
+    NSMutableArray *newData     = [[NSMutableArray alloc] init];
+    if ([summary count]) {
+        [newData addObject: [NSArray arrayWithObjects:@"Summary", summary, nil]];
+    }
+    if ([params count]) {
+        [newData addObject: [NSArray arrayWithObjects:@"Parameters", params, nil]];
+    }
+    if ([environment count]) {
+        [newData addObject: [NSArray arrayWithObjects:@"Environment", environment, nil]];
+    }
+    
+    return newData;
+}
 - (void)importDetailsFromElement: (SMXMLElement *)element {
     [self willChangeValueForKey:@"details"];
     [self importBasicsFromElement: element];
@@ -52,48 +109,8 @@
     }];
     self.backtrace = [lines componentsJoinedByString:@"\n"];
 
-
-    NSMutableDictionary *summary     = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *params      = [[NSMutableDictionary alloc] init];
-    NSMutableDictionary *environment = [[NSMutableDictionary alloc] init];
+    self.data = [self parseDataFromElement: element];
     
-    for (SMXMLElement *child in [[element childNamed: @"request"] childNamed: @"params"].children) {
-        [params setValue: [child value] forKey: [child name]];
-    }
-    
-    for (SMXMLElement *child in [element childNamed: @"environment"].children) {
-        [environment setValue: [child value] forKey: [child name]];
-    }
-    
-    NSString* url = [[[element childNamed: @"request"] childNamed: @"url"] value];
-    if (url && ![url isEqualToString:@""]) {
-        [summary setValue: url forKey:  @"URL"];
-    }
-    
-    NSString* file = [[element childNamed: @"file"] value];
-    if (file && ![file isEqualToString:@""]) {
-        [summary setValue: file forKey: @"File"];
-    }
-    
-    NSString* action = [[element childNamed: @"action"] value];
-    NSString* controller = [[element childNamed: @"controller"] value];
-    
-    if (action && controller && ![action isEqualToString:@""] && ![controller isEqualToString:@""]) {
-        [summary setValue: [controller stringByAppendingFormat: @"#%@", action] forKey:@"Action"];
-    }
-    
-    
-    NSMutableDictionary *newData     = [[NSMutableDictionary alloc] init];
-    if ([summary count]) {
-        [newData setObject: summary forKey:@"Summary"];
-    }
-    if ([params count]) {
-        [newData setObject: params forKey:@"Parameters"];
-    }
-    if ([environment count]) {
-        [newData setObject: environment forKey:@"Environment"];
-    }
-    self.data = newData;
     self.hasDetails = true;
     [self didChangeValueForKey:@"details"];
 }

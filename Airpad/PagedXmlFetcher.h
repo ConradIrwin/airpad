@@ -18,8 +18,10 @@
 @end
 
 @interface PagedXmlFetcher : NSObject <NSURLConnectionDelegate>
-@property (nonatomic,assign) id<PagedXmlFetcherDelegate> delegate;
-@property (nonatomic,assign) NSInteger pageNumber;
+@property (nonatomic, weak) id<PagedXmlFetcherDelegate> delegate;
+@property (nonatomic, assign) NSInteger pageNumber;
+@property (nonatomic, assign) NSInteger statusCode; 
+
 - (void) fetchNextPage;
 - (void) fetchPageWithRequest:(NSURLRequest *)request;
 @end

@@ -11,7 +11,6 @@
 #import "ProjectsMenuViewController.h"
 #import "UserSettings.h"
 
-
 @implementation AirbrakeDetailViewController {
     UIPopoverController *projectsMenu;
     UIPopoverController *airbrakesMenu;
@@ -123,6 +122,7 @@
     // Ensure that the dataTable is still either just below the botom of the screen and hidden,
     // or it's just under the noticescount label.
     [self fixDataTablePosition];
+    [[self view] setNeedsDisplay];
 }
 
 #pragma mark - Split View Handling
