@@ -52,6 +52,8 @@
 		CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5210C9146F422E00EAF9F9 /* DGSwitch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE521111146F422F00EAF9F9 /* slider.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5210F8146F422E00EAF9F9 /* slider.png */; };
 		CE9026901470CB02005070F7 /* AirbrakeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE90268F1470CB02005070F7 /* AirbrakeView.m */; };
+		CEA677991477A9CE00D39569 /* AirbrakeDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA677981477A9CE00D39569 /* AirbrakeDateView.m */; };
+		CEA677A51478867E00D39569 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA677A41478867E00D39569 /* QuartzCore.framework */; };
 		CEB9A64A146D08D6008901DB /* AirbrakeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEB9A648146D08D6008901DB /* AirbrakeModel.xcdatamodeld */; };
 		CEC44B86146F568D000CB29D /* DataTableDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC44B85146F568D000CB29D /* DataTableDelegate.m */; };
 		CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC636DA146CF7FE0036FA02 /* UIKit.framework */; };
@@ -158,6 +160,9 @@
 		CE521112146F424000EAF9F9 /* DGSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGSwitch.h; sourceTree = "<group>"; };
 		CE90268E1470CB02005070F7 /* AirbrakeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeView.h; sourceTree = "<group>"; };
 		CE90268F1470CB02005070F7 /* AirbrakeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeView.m; sourceTree = "<group>"; };
+		CEA677971477A9CE00D39569 /* AirbrakeDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirbrakeDateView.h; sourceTree = "<group>"; };
+		CEA677981477A9CE00D39569 /* AirbrakeDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirbrakeDateView.m; sourceTree = "<group>"; };
+		CEA677A41478867E00D39569 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CEB9A649146D08D6008901DB /* AirbrakeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AirbrakeModel.xcdatamodel; sourceTree = "<group>"; };
 		CEC44B84146F568D000CB29D /* DataTableDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTableDelegate.h; sourceTree = "<group>"; };
 		CEC44B85146F568D000CB29D /* DataTableDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTableDelegate.m; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA677A51478867E00D39569 /* QuartzCore.framework in Frameworks */,
 				CE00EA8F146CF9D4004AB0EC /* MessageUI.framework in Frameworks */,
 				CEC636DB146CF7FE0036FA02 /* UIKit.framework in Frameworks */,
 				CEC636DD146CF7FE0036FA02 /* Foundation.framework in Frameworks */,
@@ -304,6 +310,8 @@
 				CE5210C9146F422E00EAF9F9 /* DGSwitch.m */,
 				CE521112146F424000EAF9F9 /* DGSwitch.h */,
 				CE5210F8146F422E00EAF9F9 /* slider.png */,
+				CEA677971477A9CE00D39569 /* AirbrakeDateView.h */,
+				CEA677981477A9CE00D39569 /* AirbrakeDateView.m */,
 				CEC44B84146F568D000CB29D /* DataTableDelegate.h */,
 				CEC44B85146F568D000CB29D /* DataTableDelegate.m */,
 				CE00E9F6146CF876004AB0EC /* AirbrakeDetailView.xib */,
@@ -387,6 +395,7 @@
 		CEC636D9146CF7FE0036FA02 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEA677A41478867E00D39569 /* QuartzCore.framework */,
 				CE00EA8E146CF9D4004AB0EC /* MessageUI.framework */,
 				CEC636DA146CF7FE0036FA02 /* UIKit.framework */,
 				CEC636DC146CF7FE0036FA02 /* Foundation.framework */,
@@ -596,6 +605,7 @@
 				CE5210F9146F422F00EAF9F9 /* DGSwitch.m in Sources */,
 				CEC44B86146F568D000CB29D /* DataTableDelegate.m in Sources */,
 				CE9026901470CB02005070F7 /* AirbrakeView.m in Sources */,
+				CEA677991477A9CE00D39569 /* AirbrakeDateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

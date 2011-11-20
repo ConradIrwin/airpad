@@ -22,6 +22,7 @@
 @synthesize occurrenceLabel;
 @synthesize backtraceText;
 @synthesize projectMenuButton;
+@synthesize dateView;
 @synthesize listView;
 @synthesize viewChanger;
 
@@ -100,6 +101,7 @@
     [self setResolveSlider:nil];
     [self setDataTable:nil];
     [self setViewChanger:nil];
+    [self setDateView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -190,6 +192,10 @@
         [resolveSlider setOn: [user.currentAirbrake.isResolved boolValue]];
         [titleLabel setText: user.currentAirbrake.errorMessage];
         [occurrenceLabel setText: [self occurrenceDescription]];
+        [dateView setStartDate: user.currentAirbrake.earliestSeenAt];
+        [dateView setEndDate: user.currentAirbrake.latestSeenAt];
+        [dateView setCount: [user.currentAirbrake.noticesCount integerValue]];
+        [dateView setNeedsDisplay];
         [dataTable reloadData];
         
     } else if (context == @"projectFilter") {

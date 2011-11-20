@@ -13,6 +13,7 @@
 #import "AirbrakeListViewController.h"
 #import "DGSwitch.h"
 #import "DataTableDelegate.h"
+#import "AirbrakeDateView.h"
 
 @interface AirbrakeDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *dataTable;
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) AirbrakeListViewController* listView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *viewChanger;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *projectMenuButton;
+@property (weak, nonatomic) IBOutlet AirbrakeDateView *dateView;
 
 @property (nonatomic, strong) DataTableDelegate *dataTableDelegate;
 @property (nonatomic, strong) AirbrakeUser* user;
